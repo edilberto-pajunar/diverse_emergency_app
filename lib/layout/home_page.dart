@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
-import 'package:emergency_test/features/map/map_page.dart';
-import 'package:emergency_test/features/user_activities/user_activities_page.dart';
-import 'package:emergency_test/features/user_profile/user_profile_page.dart';
+import 'package:emergency_test/features/user_map/view/user_map_page.dart';
+import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
+import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
 typedef TabWidgetRecord = ({Widget tabView, Widget tabBarItem});
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         icon: Icon(Icons.map),
         label: "Map",
       ),
-      tabView: const MapPage()
+      tabView: const UserMapPage()
     ),
     (
       tabBarItem: const NavigationDestination(
@@ -45,6 +45,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      body: homeTabWidgetRecords
+          .map((tabRecord) => tabRecord.tabView)
+          .toList()[tabIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: tabIndex,
         onDestinationSelected: (selectedIndex) {

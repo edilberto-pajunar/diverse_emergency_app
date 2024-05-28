@@ -14,6 +14,20 @@ class AppRouter extends $AppRouter {
           page: HomeRoute.page,
           path: "/",
           initial: true,
+          children: [
+            AutoRoute(
+              page: UserActivitiesRoute.page,
+              path: "activity",
+            ),
+            AutoRoute(
+              page: UserMapRoute.page,
+              path: "map",
+            ),
+            AutoRoute(
+              page: UserProfileRoute.page,
+              path: "profile",
+            ),
+          ],
         ),
       ];
 }
