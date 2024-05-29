@@ -11,3 +11,10 @@ class AppInitRequested extends AppEvent {}
 
 class AppInitLocationStreamRequested extends AppEvent {}
 
+class AppInitGoogleMapControllerStarted extends AppEvent {
+  final GoogleMapController controller;
+
+  const AppInitGoogleMapControllerStarted({
+    required this.controller,
+  });
+}

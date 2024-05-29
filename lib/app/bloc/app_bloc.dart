@@ -3,6 +3,7 @@ import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -16,6 +17,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         super(const AppState()) {
     on<AppInitRequested>(_onInitRequested);
     on<AppInitLocationStreamRequested>(_onInitLocationStreamRequested);
+    on<AppInitGoogleMapControllerStarted>(_onInitGoogleMapControllerStarted);
   }
 
   void _onInitRequested(
@@ -55,5 +57,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           break;
       }
     }
+  }
+
+  void _onInitGoogleMapControllerStarted(
+    AppInitGoogleMapControllerStarted event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(googleMapController: event.controller));
   }
 }

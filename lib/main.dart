@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:emergency_test/app/app_bloc_observer.dart';
 import 'package:emergency_test/app/view/app.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/place_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -14,5 +15,6 @@ void runAppIn() {
 
   runApp(App(
     geolocationRepository: GeolocationRepository(),
+    placesRepository: PlaceRepository(),
   ));
 }

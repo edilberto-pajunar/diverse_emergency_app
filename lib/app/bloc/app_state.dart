@@ -7,12 +7,14 @@ final class AppState extends Equatable {
   final LocationPermission? locationPermission;
   final AppLocation? currentLocation;
   final AppLocationStatus appLocationStatus;
+  final GoogleMapController? googleMapController;
 
   const AppState({
     this.serviceStatus,
     this.locationPermission,
     this.currentLocation,
     this.appLocationStatus = AppLocationStatus.idle,
+    this.googleMapController,
   });
 
   AppState copyWith({
@@ -20,12 +22,14 @@ final class AppState extends Equatable {
     LocationPermission? locationPermission,
     AppLocation? currentLocation,
     AppLocationStatus? appLocationStatus,
+    GoogleMapController? googleMapController,
   }) {
     return AppState(
       serviceStatus: serviceStatus ?? this.serviceStatus,
       locationPermission: locationPermission ?? this.locationPermission,
       currentLocation: currentLocation ?? this.currentLocation,
       appLocationStatus: appLocationStatus ?? this.appLocationStatus,
+      googleMapController: googleMapController ?? this.googleMapController,
     );
   }
 
@@ -35,5 +39,6 @@ final class AppState extends Equatable {
         locationPermission,
         currentLocation,
         appLocationStatus,
+        googleMapController,
       ];
 }
