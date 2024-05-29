@@ -1,51 +1,68 @@
-import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/user_map/view/user_map_page.dart';
+import 'package:emergency_test/features/user_map/widgets/user_map_details.dart';
+import 'package:emergency_test/features/user_map/widgets/user_map_panel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class UserMapView extends StatelessWidget {
+class UserMapView extends StatefulWidget {
   const UserMapView({super.key});
 
   @override
+  State<UserMapView> createState() => _UserMapViewState();
+}
+
+class _UserMapViewState extends State<UserMapView> {
+  static double fabHeightClosed = 110;
+  double fabHeight = fabHeightClosed;
+  final PanelController panelController = PanelController();
+
+  @override
   Widget build(BuildContext context) {
-    const LatLng googlePlex = LatLng(37.4223, -122.0848);
-    const LatLng mountainView = LatLng(37.3861, -122.0839);
+    final Size size = MediaQuery.of(context).size;
+
+    final panelHeightClosed = size.height * 0.1;
+    final panelHeightOpen = size.height * 0.5;
 
     return Scaffold(
-      body: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          if (state.appLocationStatus == AppLocationStatus.loading ||
-              state.appLocationStatus == AppLocationStatus.idle) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(state.currentLocation!.location.$1,
-                  state.currentLocation!.location.$2),
-              zoom: 13,
+      body: Stack(
+        children: [
+          SlidingUpPanel(
+            controller: panelController,
+            minHeight: panelHeightClosed,
+            maxHeight: panelHeightOpen,
+            parallaxEnabled: true,
+            parallaxOffset: 0.5,
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(18.0),
+              topLeft: Radius.circular(18.0),
             ),
-            markers: {
-              const Marker(
-                markerId: MarkerId("sourceLocation"),
-                icon: BitmapDescriptor.defaultMarker,
-                position: googlePlex,
-              ),
-              const Marker(
-                markerId: MarkerId("destinationLocation"),
-                icon: BitmapDescriptor.defaultMarker,
-                position: mountainView,
-              ),
-              Marker(
-                markerId: const MarkerId("currentLocation"),
-                icon: BitmapDescriptor.defaultMarker,
-                position: LatLng(state.currentLocation!.location.$1,
-                    state.currentLocation!.location.$2),
-              ),
+            body: const UserMapDetails(),
+            panelBuilder: (controller) {
+              return UserMapPanel(
+                scrollController: controller,
+                panelController: panelController,
+              );
             },
-          );
-        },
+            onPanelSlide: (position) => setState(() {
+              final panelMaxScollExtent = panelHeightOpen - panelHeightClosed;
+              fabHeight = position * panelMaxScollExtent + fabHeightClosed;
+            }),
+          ),
+          Positioned(
+            bottom: fabHeight,
+            right: 20,
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+              onPressed: () {},
+              child: const Icon(Icons.location_searching_rounded),
+            ),
+          ),
+        ],
       ),
     );
   }
