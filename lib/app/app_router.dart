@@ -1,31 +1,34 @@
-import 'package:auto_route/annotations.dart';
-import 'package:auto_route/src/route/auto_route_config.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:emergency_test/app/app_router.gr.dart';
+import 'package:emergency_test/app/view/app_router_guard.dart';
+import 'package:emergency_test/repository/auth_repository.dart';
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
+  final AuthRepository _authRepository;
+
+  AppRouter(this._authRepository);
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
-          path: "/${AuthRoute.name}",
+          initial: true,
         ),
         AutoRoute(
           page: HomeRoute.page,
-          path: "/",
-          initial: true,
+          guards: [
+            AuthGuard(_authRepository),
+          ],
           children: [
             AutoRoute(
               page: UserActivitiesRoute.page,
-              path: "activity",
             ),
             AutoRoute(
               page: UserMapRoute.page,
-              path: "map",
             ),
             AutoRoute(
               page: UserProfileRoute.page,
-              path: "profile",
             ),
           ],
         ),

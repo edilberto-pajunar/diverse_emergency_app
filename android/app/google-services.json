@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1083973996428",
+    "project_id": "emergency-test-de897",
+    "storage_bucket": "emergency-test-de897.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083973996428:android:82f40f34b64ecfb8fcd0a9",
+        "android_client_info": {
+          "package_name": "com.example.emergency_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmjWJR0boQ1xheWJd5Ir5Kgxag7hIKpWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
