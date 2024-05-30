@@ -18,3 +18,7 @@ class MapNearbyPlaceRequested extends MapEvent {
     required this.type,
   });
 }
+
+class MapPanelButtonTapped extends MapEvent {
+  
+}

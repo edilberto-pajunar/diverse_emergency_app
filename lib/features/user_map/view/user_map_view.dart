@@ -45,6 +45,7 @@ class _UserMapViewState extends State<UserMapView> {
                 panelController: panelController,
               );
             },
+            isDraggable: false,
             // onPanelSlide: (position) => setState(() {
             //   final panelMaxScollExtent = panelHeightOpen - panelHeightClosed;
             //   fabHeight = position * panelMaxScollExtent + fabHeightClosed;

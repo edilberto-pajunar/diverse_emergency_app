@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final nearbyPlace = nearbyPlaceFromJson(jsonString);
+
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
@@ -10,68 +14,38 @@ String nearbyPlaceToJson(NearbyPlace data) => json.encode(data.toJson());
 
 @JsonSerializable()
 class NearbyPlace {
-  @JsonKey(name: "geometry")
-  final Geometry geometry;
-  @JsonKey(name: "icon")
-  final String? icon;
-  @JsonKey(name: "icon_background_color")
-  final String? iconBackgroundColor;
-  @JsonKey(name: "icon_mask_base_uri")
-  final String? iconMaskBaseUri;
-  @JsonKey(name: "name")
-  final String? name;
-  @JsonKey(name: "photos")
-  final List<Photo>? photos;
-  @JsonKey(name: "place_id")
-  final String placeId;
-  @JsonKey(name: "reference")
-  final String? reference;
-  @JsonKey(name: "scope")
-  final String? scope;
-  @JsonKey(name: "types")
-  final List<String>? types;
-  @JsonKey(name: "vicinity")
-  final String? vicinity;
+  @JsonKey(name: "id")
+  final String id;
+  @JsonKey(name: "formattedAddress")
+  final String formattedAddress;
+  @JsonKey(name: "location")
+  final Location location;
+  @JsonKey(name: "rating")
+  final double? rating;
+  @JsonKey(name: "displayName")
+  final DisplayName displayName;
 
   NearbyPlace({
-    required this.geometry,
-    required this.icon,
-    required this.iconBackgroundColor,
-    required this.iconMaskBaseUri,
-    required this.name,
-    required this.photos,
-    required this.placeId,
-    required this.reference,
-    required this.scope,
-    required this.types,
-    required this.vicinity,
+    required this.id,
+    required this.formattedAddress,
+    required this.location,
+    required this.rating,
+    required this.displayName,
   });
 
   NearbyPlace copyWith({
-    Geometry? geometry,
-    String? icon,
-    String? iconBackgroundColor,
-    String? iconMaskBaseUri,
-    String? name,
-    List<Photo>? photos,
-    String? placeId,
-    String? reference,
-    String? scope,
-    List<String>? types,
-    String? vicinity,
+    String? id,
+    String? formattedAddress,
+    Location? location,
+    double? rating,
+    DisplayName? displayName,
   }) =>
       NearbyPlace(
-        geometry: geometry ?? this.geometry,
-        icon: icon ?? this.icon,
-        iconBackgroundColor: iconBackgroundColor ?? this.iconBackgroundColor,
-        iconMaskBaseUri: iconMaskBaseUri ?? this.iconMaskBaseUri,
-        name: name ?? this.name,
-        photos: photos ?? this.photos,
-        placeId: placeId ?? this.placeId,
-        reference: reference ?? this.reference,
-        scope: scope ?? this.scope,
-        types: types ?? this.types,
-        vicinity: vicinity ?? this.vicinity,
+        id: id ?? this.id,
+        formattedAddress: formattedAddress ?? this.formattedAddress,
+        location: location ?? this.location,
+        rating: rating ?? this.rating,
+        displayName: displayName ?? this.displayName,
       );
 
   factory NearbyPlace.fromJson(Map<String, dynamic> json) =>
@@ -81,118 +55,55 @@ class NearbyPlace {
 }
 
 @JsonSerializable()
-class Geometry {
-  @JsonKey(name: "location")
-  final Location location;
-  @JsonKey(name: "viewport")
-  final Viewport viewport;
+class DisplayName {
+  @JsonKey(name: "text")
+  final String text;
+  @JsonKey(name: "languageCode")
+  final String languageCode;
 
-  Geometry({
-    required this.location,
-    required this.viewport,
+  DisplayName({
+    required this.text,
+    required this.languageCode,
   });
 
-  Geometry copyWith({
-    Location? location,
-    Viewport? viewport,
+  DisplayName copyWith({
+    String? text,
+    String? languageCode,
   }) =>
-      Geometry(
-        location: location ?? this.location,
-        viewport: viewport ?? this.viewport,
+      DisplayName(
+        text: text ?? this.text,
+        languageCode: languageCode ?? this.languageCode,
       );
 
-  factory Geometry.fromJson(Map<String, dynamic> json) =>
-      _$GeometryFromJson(json);
+  factory DisplayName.fromJson(Map<String, dynamic> json) =>
+      _$DisplayNameFromJson(json);
 
-  Map<String, dynamic> toJson() => _$GeometryToJson(this);
+  Map<String, dynamic> toJson() => _$DisplayNameToJson(this);
 }
 
 @JsonSerializable()
 class Location {
-  @JsonKey(name: "lat")
-  final double lat;
-  @JsonKey(name: "lng")
-  final double lng;
+  @JsonKey(name: "latitude")
+  final double? latitude;
+  @JsonKey(name: "longitude")
+  final double? longitude;
 
   Location({
-    required this.lat,
-    required this.lng,
+    required this.latitude,
+    required this.longitude,
   });
 
   Location copyWith({
-    double? lat,
-    double? lng,
+    double? latitude,
+    double? longitude,
   }) =>
       Location(
-        lat: lat ?? this.lat,
-        lng: lng ?? this.lng,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
       );
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
 
   Map<String, dynamic> toJson() => _$LocationToJson(this);
-}
-
-@JsonSerializable()
-class Viewport {
-  @JsonKey(name: "northeast")
-  final Location northeast;
-  @JsonKey(name: "southwest")
-  final Location southwest;
-
-  Viewport({
-    required this.northeast,
-    required this.southwest,
-  });
-
-  Viewport copyWith({
-    Location? northeast,
-    Location? southwest,
-  }) =>
-      Viewport(
-        northeast: northeast ?? this.northeast,
-        southwest: southwest ?? this.southwest,
-      );
-
-  factory Viewport.fromJson(Map<String, dynamic> json) =>
-      _$ViewportFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ViewportToJson(this);
-}
-
-@JsonSerializable()
-class Photo {
-  @JsonKey(name: "height")
-  final int height;
-  @JsonKey(name: "html_attributions")
-  final List<String> htmlAttributions;
-  @JsonKey(name: "photo_reference")
-  final String photoReference;
-  @JsonKey(name: "width")
-  final int width;
-
-  Photo({
-    required this.height,
-    required this.htmlAttributions,
-    required this.photoReference,
-    required this.width,
-  });
-
-  Photo copyWith({
-    int? height,
-    List<String>? htmlAttributions,
-    String? photoReference,
-    int? width,
-  }) =>
-      Photo(
-        height: height ?? this.height,
-        htmlAttributions: htmlAttributions ?? this.htmlAttributions,
-        photoReference: photoReference ?? this.photoReference,
-        width: width ?? this.width,
-      );
-
-  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PhotoToJson(this);
 }

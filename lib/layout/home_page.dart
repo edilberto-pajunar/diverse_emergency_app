@@ -65,9 +65,12 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: const UserInfoDrawer(),
-        body: homeTabWidgetRecords
-            .map((tabRecord) => tabRecord.tabView)
-            .toList()[tabIndex],
+        body: IndexedStack(
+          index: tabIndex,
+          children: homeTabWidgetRecords
+              .map((tabRecord) => tabRecord.tabView)
+              .toList(),
+        ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: tabIndex,
           onDestinationSelected: (selectedIndex) {

@@ -16,15 +16,15 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     required PlaceRepository placeRepository,
   })  : _placeRepository = placeRepository,
         super(const MapState()) {
-    on<MapNearbyPlaceRequested>(_onMapNearbyPlaceRequested);
+    on<MapNearbyPlaceRequested>(_onNearbyPlaceRequested);
+    on<MapPanelButtonTapped>(_onPanelButtonTapped);
   }
 
-  void _onMapNearbyPlaceRequested(
+  void _onNearbyPlaceRequested(
     MapNearbyPlaceRequested event,
     Emitter<MapState> emit,
   ) async {
     emit(state.copyWith(nearbyPlaceStatus: NearbyPlaceStatus.loading));
-    // Set<Marker> markers = {};
 
     try {
       final nearbyPlaces = await _placeRepository.getPlacesFromNearby(
@@ -33,36 +33,16 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         type: event.type,
       );
 
-      // markers.add(
-      //   Marker(
-      //     markerId: const MarkerId("currentLocation"),
-      //     icon: BitmapDescriptor.defaultMarker,
-      //     position: LatLng(event.lat, event.lng),
-      //   ),
-      // );
-
-      // for (final place in nearbyPlaces) {
-      //   markers.add(
-      //     Marker(
-      //       markerId: MarkerId(place.placeId),
-      //       position: LatLng(
-      //           place.geometry.location.lat, place.geometry.location.lng),
-      //       icon: BitmapDescriptor.defaultMarkerWithHue(
-      //           BitmapDescriptor.hueGreen),
-      //     ),
-      //   );
-      // }
-
-      // emit(
-      //   state.copyWith(
-      //     nearbyPlaces: nearbyPlaces,
-      //     nearbyPlaceStatus: NearbyPlaceStatus.success,
-      //     markers: markers,
-      //   ),
-      // );
+      emit(state.copyWith(nearbyPlaces: nearbyPlaces));
     } catch (e) {
       log("Error: $e");
       emit(state.copyWith(nearbyPlaceStatus: NearbyPlaceStatus.failed));
     }
+  }
+
+  void _onPanelButtonTapped(
+      MapPanelButtonTapped event, Emitter<MapState> emit) {
+    final updatedPanel = !state.panelShow;
+    emit(state.copyWith(panelShow: updatedPanel));
   }
 }

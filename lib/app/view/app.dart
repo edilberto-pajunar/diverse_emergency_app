@@ -38,15 +38,15 @@ class _AppState extends State<App> {
     final AppBloc appBloc = AppBloc(
       geolocationRepository: widget.geolocationRepository,
       authRepository: widget.authRepository,
-    )..add(AppInitRequested());
-
-    AppLifecycleListener(
-      onStateChange: (state) {
-        if (state == AppLifecycleState.resumed) {
-          print("resume");
-        }
-      },
     );
+
+    // AppLifecycleListener(
+    //   onStateChange: (state) {
+    //     if (state == AppLifecycleState.resumed) {
+    //       print("resume");
+    //     }
+    //   },
+    // );
 
     return MultiRepositoryProvider(
       providers: [
@@ -55,7 +55,10 @@ class _AppState extends State<App> {
         RepositoryProvider.value(value: widget.authRepository),
       ],
       child: BlocProvider(
-        create: (context) => appBloc,
+        create: (context) => AppBloc(
+          geolocationRepository: widget.geolocationRepository,
+          authRepository: widget.authRepository,
+        )..add(AppInitRequested()),
         child: AppView(_appRouter),
       ),
     );

@@ -31,7 +31,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     add(AppInitLocationStreamRequested());
-    // add(AppInitAuthStreamRequested());
+    add(AppInitAuthStreamRequested());
   }
 
   void _onInitLocationStreamRequested(
