@@ -4,35 +4,39 @@ import 'package:emergency_test/models/nearby_place.dart';
 import 'package:http/http.dart' as http;
 
 class PlaceRepository {
-  Future<List<NearbyPlace>> getPlacesFromNearby({
+  Future<void> getPlacesFromNearby({
     required double lat,
     required double lng,
     required String type,
   }) async {
-    const apiKey = String.fromEnvironment("MAPS_API_KEY");
+    const apiKey = String.fromEnvironment("MAPS_ACCESS_TOKEN");
+
+    // https://api.mapbox.com/search/geocode/v6/reverse?types=place&longitude=-78&latitude=38.89992678765707&access_token=pk.eyJ1IjoicGFqdW5hcjA0IiwiYSI6ImNsd3N5cWc5ejAxOGsya3M2a3J3dTM5Nm8ifQ.TrTpwKH1kK_PIqYYPXm1rw
 
     final params = {
-      "location": "$lat,$lng",
-      "radius": "1500",
-      "type": type,
-      "key": apiKey,
+      "types": type,
+      "longitude": "lng",
+      "latitude": "lat",
+      "access_token": apiKey,
     };
 
     final placesNearybUrl = Uri.https(
-      "maps.googleapis.com",
-      "/maps/api/place/nearbysearch/json",
+      "api.mapbox.com",
+      "/search/geocode/v6/reverse",
       params,
     );
 
     final response = await http.get(placesNearybUrl);
+    print(response.body);
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-      final listData = responseData["results"] as List;
+      // print(responseData);
+      // final listData = responseData["results"] as List;
 
-      print(listData);
+      // print(listData);
 
-      return listData.map((data) => NearbyPlace.fromJson(data)).toList();
+      // return listData.map((data) => NearbyPlace.fromJson(data)).toList();
     } else {
       throw Exception(
         "Error retrieving places nearby: ${response.reasonPhrase}",

@@ -48,8 +48,10 @@
 
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To display and track location</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To display and track location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>To display and track location</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 </dict>
 </plist>

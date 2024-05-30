@@ -22,4 +22,6 @@ class GeolocationRepository {
           location: (pos.latitude, pos.longitude),
         ));
   }
+
+  
 }

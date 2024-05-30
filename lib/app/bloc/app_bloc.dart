@@ -5,7 +5,6 @@ import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -23,7 +22,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppInitRequested>(_onInitRequested);
     on<AppInitLocationStreamRequested>(_onInitLocationStreamRequested);
     on<AppInitAuthStreamRequested>(_onAppInitAuthStreamRequested);
-    on<AppInitGoogleMapControllerStarted>(_onInitGoogleMapControllerStarted);
     on<AppSignOutRequested>(_onSignOutRequested);
     on<AppSignOutFailed>(_onSignOutFailed);
   }
@@ -33,7 +31,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     add(AppInitLocationStreamRequested());
-    add(AppInitAuthStreamRequested());
+    // add(AppInitAuthStreamRequested());
   }
 
   void _onInitLocationStreamRequested(
@@ -77,13 +75,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
       return state.copyWith(currentUser: user);
     });
-  }
-
-  void _onInitGoogleMapControllerStarted(
-    AppInitGoogleMapControllerStarted event,
-    Emitter<AppState> emit,
-  ) {
-    emit(state.copyWith(googleMapController: event.controller));
   }
 
   void _onSignOutRequested(

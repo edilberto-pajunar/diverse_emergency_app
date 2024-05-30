@@ -2,6 +2,7 @@ import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/user_map/bloc/map_bloc.dart';
 import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/models/nearby_place.dart';
+import 'package:emergency_test/repository/place_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -132,11 +133,11 @@ class IconTitle extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (state != null) {
-              context.read<MapBloc>().add(MapNearbyPlaceRequested(
+              context.read<PlaceRepository>().getPlacesFromNearby(
                     lat: state.location.$1,
                     lng: state.location.$2,
                     type: title,
-                  ));
+                  );
             }
           },
           child: Column(

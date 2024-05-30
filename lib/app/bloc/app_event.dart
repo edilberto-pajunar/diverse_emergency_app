@@ -13,14 +13,6 @@ class AppInitLocationStreamRequested extends AppEvent {}
 
 class AppInitAuthStreamRequested extends AppEvent {}
 
-class AppInitGoogleMapControllerStarted extends AppEvent {
-  final GoogleMapController controller;
-
-  const AppInitGoogleMapControllerStarted({
-    required this.controller,
-  });
-}
-
 class AppSignOutRequested extends AppEvent {}
 
 final class AppSignOutFailed extends AppEvent {

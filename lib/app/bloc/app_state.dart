@@ -9,7 +9,6 @@ final class AppState extends Equatable {
   final LocationPermission? locationPermission;
   final AppLocation? currentLocation;
   final AppLocationStatus appLocationStatus;
-  final GoogleMapController? googleMapController;
   final AppUser? currentUser;
   final SignoutStatus? signoutStatus;
 
@@ -18,7 +17,6 @@ final class AppState extends Equatable {
     this.locationPermission,
     this.currentLocation,
     this.appLocationStatus = AppLocationStatus.idle,
-    this.googleMapController,
     this.currentUser,
     this.signoutStatus,
   });
@@ -28,7 +26,6 @@ final class AppState extends Equatable {
     LocationPermission? locationPermission,
     AppLocation? currentLocation,
     AppLocationStatus? appLocationStatus,
-    GoogleMapController? googleMapController,
     AppUser? currentUser,
     SignoutStatus? signoutStatus,
   }) {
@@ -37,7 +34,6 @@ final class AppState extends Equatable {
       locationPermission: locationPermission ?? this.locationPermission,
       currentLocation: currentLocation ?? this.currentLocation,
       appLocationStatus: appLocationStatus ?? this.appLocationStatus,
-      googleMapController: googleMapController ?? this.googleMapController,
       currentUser: currentUser ?? this.currentUser,
       signoutStatus: signoutStatus ?? this.signoutStatus,
     );
@@ -49,7 +45,6 @@ final class AppState extends Equatable {
         locationPermission,
         currentLocation,
         appLocationStatus,
-        googleMapController,
         currentUser,
         signoutStatus,
       ];

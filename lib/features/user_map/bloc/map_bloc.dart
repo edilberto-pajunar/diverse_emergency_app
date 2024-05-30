@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/nearby_place.dart';
 import 'package:emergency_test/repository/place_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:flutter_map/flutter_map.dart';
 
 part 'map_event.dart';
 part 'map_state.dart';
@@ -24,7 +24,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     Emitter<MapState> emit,
   ) async {
     emit(state.copyWith(nearbyPlaceStatus: NearbyPlaceStatus.loading));
-    Set<Marker> markers = {};
+    // Set<Marker> markers = {};
 
     try {
       final nearbyPlaces = await _placeRepository.getPlacesFromNearby(
@@ -33,33 +33,33 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         type: event.type,
       );
 
-      markers.add(
-        Marker(
-          markerId: const MarkerId("currentLocation"),
-          icon: BitmapDescriptor.defaultMarker,
-          position: LatLng(event.lat, event.lng),
-        ),
-      );
+      // markers.add(
+      //   Marker(
+      //     markerId: const MarkerId("currentLocation"),
+      //     icon: BitmapDescriptor.defaultMarker,
+      //     position: LatLng(event.lat, event.lng),
+      //   ),
+      // );
 
-      for (final place in nearbyPlaces) {
-        markers.add(
-          Marker(
-            markerId: MarkerId(place.placeId),
-            position: LatLng(
-                place.geometry.location.lat, place.geometry.location.lng),
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-                BitmapDescriptor.hueGreen),
-          ),
-        );
-      }
+      // for (final place in nearbyPlaces) {
+      //   markers.add(
+      //     Marker(
+      //       markerId: MarkerId(place.placeId),
+      //       position: LatLng(
+      //           place.geometry.location.lat, place.geometry.location.lng),
+      //       icon: BitmapDescriptor.defaultMarkerWithHue(
+      //           BitmapDescriptor.hueGreen),
+      //     ),
+      //   );
+      // }
 
-      emit(
-        state.copyWith(
-          nearbyPlaces: nearbyPlaces,
-          nearbyPlaceStatus: NearbyPlaceStatus.success,
-          markers: markers,
-        ),
-      );
+      // emit(
+      //   state.copyWith(
+      //     nearbyPlaces: nearbyPlaces,
+      //     nearbyPlaceStatus: NearbyPlaceStatus.success,
+      //     markers: markers,
+      //   ),
+      // );
     } catch (e) {
       log("Error: $e");
       emit(state.copyWith(nearbyPlaceStatus: NearbyPlaceStatus.failed));
