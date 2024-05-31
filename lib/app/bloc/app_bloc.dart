@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/models/app_user.dart';
+import 'package:emergency_test/models/app_user_info.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/user_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -12,16 +14,20 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   final GeolocationRepository _geolocationRepository;
   final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
   AppBloc({
     required GeolocationRepository geolocationRepository,
     required AuthRepository authRepository,
+    required UserRepository userRepository,
   })  : _geolocationRepository = geolocationRepository,
         _authRepository = authRepository,
+        _userRepository = userRepository,
         super(const AppState()) {
     on<AppInitRequested>(_onInitRequested);
     on<AppInitLocationStreamRequested>(_onInitLocationStreamRequested);
     on<AppInitAuthStreamRequested>(_onAppInitAuthStreamRequested);
+    on<AppInitUserInfoStreamRequested>(_onInitUserInfoStreamRequested);
     on<AppSignOutRequested>(_onSignOutRequested);
     on<AppSignOutFailed>(_onSignOutFailed);
   }
@@ -30,8 +36,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitRequested event,
     Emitter<AppState> emit,
   ) {
-    add(AppInitLocationStreamRequested());
     add(AppInitAuthStreamRequested());
+    add(AppInitLocationStreamRequested());
   }
 
   void _onInitLocationStreamRequested(
@@ -49,9 +55,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final locationPermission = await Geolocator.checkPermission();
       emit(state.copyWith(locationPermission: locationPermission));
 
+      // final userLocation =
+      //     await _geolocationRepository.getLocation(withAddress: true);
+      // emit(state.copyWith(currentLocation: userLocation));
+
       await emit.forEach(_geolocationRepository.getLocationStream(),
-          onData: (userLocation) => state.copyWith(
-                currentLocation: userLocation,
+          onData: (data) => state.copyWith(
+                currentLocation: data,
                 appLocationStatus: AppLocationStatus.success,
               ));
     } catch (e) {
@@ -73,8 +83,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await emit.forEach(_authRepository.currentUserStream, onData: (user) {
       if (user == null) return state.copyWith(currentUser: null);
 
+      if (user.id != state.currentUserInfo?.user.id) {
+        add(AppInitUserInfoStreamRequested(user));
+      }
+
       return state.copyWith(currentUser: user);
     });
+  }
+
+  void _onInitUserInfoStreamRequested(
+    AppInitUserInfoStreamRequested event,
+    Emitter<AppState> emit,
+  ) async {
+    final userInfo = await _userRepository.getUserInfo(event.user);
+    emit(state.copyWith(currentUserInfo: userInfo));
   }
 
   void _onSignOutRequested(
@@ -84,7 +106,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(signoutStatus: SignoutStatus.signingOut));
     try {
       await _authRepository.logOut();
-      emit(state.copyWith(signoutStatus: SignoutStatus.signOutSuccess));
+      emit(state.copyWith(
+        signoutStatus: SignoutStatus.signOutSuccess,
+        currentUser: null,
+      ));
     } catch (e) {
       add(AppSignOutFailed(e as Exception));
       rethrow;

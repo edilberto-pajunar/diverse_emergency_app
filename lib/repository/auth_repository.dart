@@ -29,6 +29,33 @@ class AuthRepository {
     return await _firebaseAuth.signInAnonymously();
   }
 
+  Future<UserCredential?> signInWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      final user = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return user;
+    } catch (e) {
+      throw Exception(e as Exception);
+    }
+  }
+
+  Future<UserCredential> createAccount(String email, String password) async {
+    try {
+      final user = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return user;
+    } catch (e) {
+      throw Exception(e as Exception);
+    }
+  }
+
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();

@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class UserProfilePage extends StatelessWidget {
+  static String route = "user_profile_page_route";
+
   const UserProfilePage({super.key});
 
   @override

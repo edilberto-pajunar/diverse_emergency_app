@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'app_user.g.dart';
@@ -30,6 +31,16 @@ class AppUser extends Equatable {
 
   factory AppUser.fromJson(Map<String, dynamic> json) =>
       _$AppUserFromJson(json);
+
+  factory AppUser.create(User user) {
+    return AppUser(
+      id: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      photoUrl: user.photoURL,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$AppUserToJson(this);
 }

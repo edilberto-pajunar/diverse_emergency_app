@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class UserMapPage extends StatelessWidget {
+  static String route = "user_map_page_route";
+
   const UserMapPage({super.key});
 
   @override

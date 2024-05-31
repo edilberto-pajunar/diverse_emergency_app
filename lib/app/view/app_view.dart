@@ -1,15 +1,17 @@
 import 'package:emergency_test/app/app_router.dart';
+import 'package:emergency_test/app/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppView extends StatelessWidget {
-  final AppRouter appRouter;
+  final AppRouter _appRouter;
 
-  const AppView(this.appRouter, {super.key});
+  const AppView(this._appRouter, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: appRouter.config(),
+      theme: AppTheme.theme,
+      routerConfig: _appRouter.config,
     );
   }
 }

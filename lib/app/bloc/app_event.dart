@@ -13,6 +13,11 @@ class AppInitLocationStreamRequested extends AppEvent {}
 
 class AppInitAuthStreamRequested extends AppEvent {}
 
+class AppInitUserInfoStreamRequested extends AppEvent {
+  final AppUser user;
+  const AppInitUserInfoStreamRequested(this.user);
+}
+
 class AppSignOutRequested extends AppEvent {}
 
 final class AppSignOutFailed extends AppEvent {
