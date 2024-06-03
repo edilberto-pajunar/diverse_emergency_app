@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/release
 
 secrets.json
+
+/server/node_modules
+/server/.env
