@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int tabIndex = 0;
+  int tabIndex = 1;
 
   final List<TabWidgetRecord> homeTabWidgetRecords = [
     (

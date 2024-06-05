@@ -44,5 +44,7 @@ app.*.map.json
 
 secrets.json
 
-/server/node_modules
+# Ignore Composer packages
+/server/vendor
+
 /server/.env

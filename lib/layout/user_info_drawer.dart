@@ -38,14 +38,14 @@ class UserInfoDrawer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const ListTile(
-                      title: Text("Contacts"),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios_sharp,
-                      ),
-                      leading: Icon(Icons.contact_phone_outlined),
-                    ),
-                    const Divider(),
+                    // const ListTile(
+                    //   title: Text("Contacts"),
+                    //   trailing: Icon(
+                    //     Icons.arrow_forward_ios_sharp,
+                    //   ),
+                    //   leading: Icon(Icons.contact_phone_outlined),
+                    // ),
+                    // const Divider(),
                     const ListTile(
                       title: Text("History"),
                       trailing: Icon(
@@ -68,7 +68,6 @@ class UserInfoDrawer extends StatelessWidget {
                       padding: EdgeInsets.all(20.0),
                       child: Text("v.1.0.0"),
                     ),
-                    const Divider(),
                   ],
                 ),
         );
