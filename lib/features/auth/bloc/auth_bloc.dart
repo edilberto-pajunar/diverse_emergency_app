@@ -68,14 +68,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (userCred.user == null) return;
-
-      await _databaseRepository.setData(
-        path: "users/${userCred.user?.uid}",
-        data: AppUserInfo(
-          user: AppUser.create(userCred.user!),
-          username: event.username,
-        ).toJson(),
-      );
     } catch (e) {
       print(e.runtimeType);
       add(AuthSignInFailed("$e"));

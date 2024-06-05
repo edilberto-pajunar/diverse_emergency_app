@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:emergency_test/models/app_user.dart';
 import 'package:emergency_test/models/app_user_info.dart';
 import 'package:emergency_test/repository/database_repository.dart';
+import 'package:http/http.dart' as http;
 
 class UserRepository {
   final DatabaseRepository databaseRepository;
@@ -43,5 +46,26 @@ class UserRepository {
       path: userPath,
       builder: (data, _) => AppUserInfo.fromJson(data),
     );
+  }
+
+  Future<void> submitCode(String code, AppUserInfo user) async {
+    if (user.activationCode.toString() == code) {
+      await databaseRepository.setData(
+        path: "users/${user.user.id}",
+        data: user.copyWith(activatedAt: DateTime.now()).toJson(),
+      );
+    }
+  }
+
+  Future<void> sendActivationCode(String email) async {
+    final uri = Uri.http("localhost", "/sendEmail");
+
+    final body = {
+      "emails": ["espajunarjr@gmail.com"],
+      "subject": "Test",
+      "body": "This is body"
+    };
+
+    await http.post(uri, body: jsonEncode(body));
   }
 }

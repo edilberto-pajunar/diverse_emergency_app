@@ -1,8 +1,16 @@
 part of 'user_activities_bloc.dart';
 
-sealed class UserActivitiesEvent extends Equatable {
+class UserActivitiesEvent extends Equatable {
   const UserActivitiesEvent();
 
   @override
   List<Object> get props => [];
+}
+
+final class UserContactTypeTapped extends UserActivitiesEvent {
+  final ContactType contactType;
+
+  const UserContactTypeTapped({
+    required this.contactType,
+  });
 }

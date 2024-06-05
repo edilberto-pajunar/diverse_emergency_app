@@ -87,6 +87,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         add(AppInitUserInfoStreamRequested(user));
       }
 
+      _userRepository.addIfNewUser(user);
+
       return state.copyWith(currentUser: user);
     });
   }
@@ -95,8 +97,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitUserInfoStreamRequested event,
     Emitter<AppState> emit,
   ) async {
-    final userInfo = await _userRepository.getUserInfo(event.user);
-    emit(state.copyWith(currentUserInfo: userInfo));
+    await emit.forEach(_userRepository.userInfoStream(event.user.id),
+        onData: (userInfo) => state.copyWith(
+              currentUserInfo: userInfo,
+            ));
   }
 
   void _onSignOutRequested(

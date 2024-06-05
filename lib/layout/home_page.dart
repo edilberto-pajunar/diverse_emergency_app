@@ -1,8 +1,10 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/activate/view/activate_page.dart';
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
 import 'package:emergency_test/layout/user_info_drawer.dart';
+import 'package:emergency_test/models/app_user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,34 +47,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<AppBloc>().add(AppSignOutRequested());
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-      drawer: const UserInfoDrawer(),
-      body: IndexedStack(
-        index: tabIndex,
-        children:
-            homeTabWidgetRecords.map((tabRecord) => tabRecord.tabView).toList(),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: tabIndex,
-        onDestinationSelected: (selectedIndex) {
-          setState(() {
-            tabIndex = selectedIndex;
-          });
-        },
-        destinations: homeTabWidgetRecords
-            .map((tabRecord) => tabRecord.tabBarItem)
-            .toList(),
-      ),
+    return BlocSelector<AppBloc, AppState, AppUserInfo?>(
+      selector: (state) => state.currentUserInfo,
+      builder: (context, state) {
+        if (state == null) return Container();
+        return state.activatedAt == null
+            ? const ActivatePage()
+            : Scaffold(
+                appBar: AppBar(
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        context.read<AppBloc>().add(AppSignOutRequested());
+                      },
+                      icon: const Icon(Icons.logout),
+                    ),
+                  ],
+                ),
+                drawer: const UserInfoDrawer(),
+                body: IndexedStack(
+                  index: tabIndex,
+                  children: homeTabWidgetRecords
+                      .map((tabRecord) => tabRecord.tabView)
+                      .toList(),
+                ),
+                bottomNavigationBar: NavigationBar(
+                  selectedIndex: tabIndex,
+                  onDestinationSelected: (selectedIndex) {
+                    setState(() {
+                      tabIndex = selectedIndex;
+                    });
+                  },
+                  destinations: homeTabWidgetRecords
+                      .map((tabRecord) => tabRecord.tabBarItem)
+                      .toList(),
+                ),
+              );
+      },
     );
   }
 }

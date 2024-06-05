@@ -1,4 +1,5 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,7 @@ class UserActivitiesView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(24.0),
@@ -46,6 +48,8 @@ class UserActivitiesView extends StatelessWidget {
                   },
                 ),
               ),
+              const SizedBox(height: 12.0),
+              const UserContact(),
             ],
           ),
         ),
