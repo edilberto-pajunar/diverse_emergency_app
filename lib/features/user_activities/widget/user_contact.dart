@@ -7,12 +7,12 @@ class UserContact extends StatelessWidget {
     super.key,
   });
 
+  static const image =
+      "https://i.pinimg.com/564x/19/eb/fd/19ebfdaf81fe2546e14b5cb22e1072e1.jpg";
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-
-    const image =
-        "https://i.pinimg.com/564x/19/eb/fd/19ebfdaf81fe2546e14b5cb22e1072e1.jpg";
 
     return BlocBuilder<UserActivitiesBloc, UserActivitiesState>(
       builder: (context, state) {

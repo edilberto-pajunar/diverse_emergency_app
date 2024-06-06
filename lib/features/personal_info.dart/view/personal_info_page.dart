@@ -1,5 +1,5 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
-import 'package:emergency_test/features/personal_info.dart/personal_info_view.dart';
+import 'package:emergency_test/features/personal_info.dart/view/personal_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

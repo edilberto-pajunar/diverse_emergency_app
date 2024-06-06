@@ -1,8 +1,12 @@
-import 'package:emergency_test/features/personal_info.dart/personal_info_page.dart';
+import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/personal_info.dart/view/personal_info_page.dart';
+import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
 import 'package:emergency_test/features/user_profile/widgets/setting_tile.dart';
+import 'package:emergency_test/models/app_user_info.dart';
 import 'package:emergency_test/utils/asset.dart';
 import 'package:emergency_test/utils/version.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class UserProfileView extends StatelessWidget {
@@ -27,10 +31,26 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12.0),
-            const ListTile(
-              leading: CircleAvatar(),
-              title: Text("User name"),
-              subtitle: Text("User email"),
+            BlocSelector<AppBloc, AppState, AppUserInfo?>(
+              selector: (state) => state.currentUserInfo,
+              builder: (context, userInfo) {
+                return ListTile(
+                  leading: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: ClipOval(
+                      child: Image.network(
+                        UserContact.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  title: Text(
+                    userInfo!.username.isEmpty ? "guest" : userInfo.username,
+                  ),
+                  subtitle: Text("${userInfo.user.email}"),
+                );
+              },
             ),
             const Divider(),
             const SizedBox(height: 12.0),

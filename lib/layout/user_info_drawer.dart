@@ -1,4 +1,5 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/history/view/history_page.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
 import 'package:emergency_test/models/app_user.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +47,13 @@ class UserInfoDrawer extends StatelessWidget {
                     //   leading: Icon(Icons.contact_phone_outlined),
                     // ),
                     // const Divider(),
-                    const ListTile(
-                      title: Text("History"),
-                      trailing: Icon(
+                    ListTile(
+                      title: const Text("History"),
+                      trailing: const Icon(
                         Icons.arrow_forward_ios_sharp,
                       ),
-                      leading: Icon(Icons.history),
+                      leading: const Icon(Icons.history),
+                      onTap: () => context.pushNamed(HistoryPage.route),
                     ),
                     const Divider(),
                     ListTile(
