@@ -46,7 +46,7 @@ class UserProfileView extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    userInfo!.username.isEmpty ? "guest" : userInfo.username,
+                    userInfo!.firstName.isEmpty ? "guest" : userInfo.firstName,
                   ),
                   subtitle: Text("${userInfo.user.email}"),
                 );

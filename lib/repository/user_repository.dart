@@ -12,7 +12,10 @@ class UserRepository {
     required this.databaseRepository,
   });
 
-  Future<void> addIfNewUser(AppUser user) async {
+  Future<void> addIfNewUser({
+    required AppUser user,
+    required AppUserInfo userInfo,
+  }) async {
     final userPath = "users/${user.id}";
 
     final userExists = await databaseRepository.docExists(path: userPath);
@@ -20,7 +23,13 @@ class UserRepository {
 
     await databaseRepository.setData(
       path: userPath,
-      data: AppUserInfo.create(user: user).toJson(),
+      data: AppUserInfo.create(
+        user: user,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        birthday: userInfo.birthday,
+        gender: userInfo.gender,
+      ).toJson(),
     );
   }
 

@@ -36,7 +36,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitRequested event,
     Emitter<AppState> emit,
   ) {
-    add(AppInitAuthStreamRequested());
+    add(const AppInitAuthStreamRequested());
     add(AppInitLocationStreamRequested());
   }
 
@@ -87,7 +87,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         add(AppInitUserInfoStreamRequested(user));
       }
 
-      _userRepository.addIfNewUser(user);
+      // _userRepository.addIfNewUser(user: user, userInfo: event.appUserInfo);
 
       return state.copyWith(currentUser: user);
     });

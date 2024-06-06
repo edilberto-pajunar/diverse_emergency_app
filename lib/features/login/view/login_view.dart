@@ -1,22 +1,22 @@
-import 'package:emergency_test/features/auth/bloc/auth_bloc.dart';
+import 'package:emergency_test/features/login/bloc/auth_bloc.dart';
+import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
 import 'package:emergency_test/utils/asset.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 
-class AuthView extends StatefulWidget {
-  const AuthView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<AuthView> createState() => _AuthViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _AuthViewState extends State<AuthView> {
+class _LoginViewState extends State<LoginView> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final TextEditingController username = TextEditingController();
-  bool showLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +50,6 @@ class _AuthViewState extends State<AuthView> {
                         width: 150,
                       ),
                       const SizedBox(height: 12.0),
-                      Visibility(
-                        visible: !showLogin,
-                        child: TextField(
-                          controller: username,
-                          decoration: const InputDecoration(
-                            hintText: "username",
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 12.0),
                       TextField(
                         controller: email,
@@ -78,23 +69,18 @@ class _AuthViewState extends State<AuthView> {
                         alignment: Alignment.bottomRight,
                         child: RichText(
                           text: TextSpan(
-                            text: showLogin
-                                ? "Don't have an account? "
-                                : "Already has an account? ",
+                            text: "Don't have an account? ",
                             style: theme.textTheme.bodyMedium!.copyWith(),
                             children: [
                               TextSpan(
-                                text: showLogin ? "Sign up" : "Login",
+                                text: "Sign up",
                                 style: theme.textTheme.bodyMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    setState(() {
-                                      showLogin = !showLogin;
-                                    });
-                                  },
+                                  ..onTap =
+                                      () => context.goNamed(SignUpPage.route),
                               ),
                             ],
                           ),
@@ -103,16 +89,10 @@ class _AuthViewState extends State<AuthView> {
                       const SizedBox(height: 24.0),
                       ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(showLogin
-                              ? AuthEmailSignInAttempted(
-                                  email: email.text, password: password.text)
-                              : AuthCreateAccountAttempted(
-                                  username: username.text,
-                                  email: email.text,
-                                  password: password.text,
-                                ));
+                          context.read<AuthBloc>().add(AuthEmailSignInAttempted(
+                              email: email.text, password: password.text));
                         },
-                        child: Text(showLogin ? "Log in" : "Sign up"),
+                        child: const Text("Log in"),
                       ),
                       const SizedBox(height: 12.0),
                       // const Text("OR"),

@@ -1,9 +1,13 @@
 import 'dart:async';
 
-import 'package:emergency_test/features/auth/view/auth_page.dart';
+import 'package:emergency_test/features/login/view/login_page.dart';
 import 'package:emergency_test/features/history/view/history_page.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
 import 'package:emergency_test/features/personal_info.dart/view/personal_info_page.dart';
+import 'package:emergency_test/features/sign_up/sign_up_home_address/view/sign_up_home_address_page.dart';
+import 'package:emergency_test/features/sign_up/sign_up_review/view/sign_up_review_page.dart';
+import 'package:emergency_test/features/sign_up/sign_up_security/view/sign_up_security_page.dart';
+import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
@@ -21,8 +25,30 @@ class AppRouter {
     routes: [
       GoRoute(
         path: "/login",
-        name: AuthPage.route,
-        builder: (context, state) => const AuthPage(),
+        name: LoginPage.route,
+        builder: (context, state) => const LoginPage(),
+        routes: [
+          GoRoute(
+            path: "sign_up",
+            name: SignUpPage.route,
+            builder: (context, state) => const SignUpPage(),
+          ),
+          GoRoute(
+            path: "home_address",
+            name: SignUpHomeAddressPage.route,
+            builder: (context, state) => const SignUpHomeAddressPage(),
+          ),
+          GoRoute(
+            path: "security",
+            name: SignUpSecurityPage.route,
+            builder: (context, state) => const SignUpSecurityPage(),
+          ),
+          GoRoute(
+            path: "review",
+            name: SignUpReviewPage.route,
+            builder: (context, state) => const SignUpReviewPage(),
+          ),
+        ],
       ),
       GoRoute(
         path: "/",

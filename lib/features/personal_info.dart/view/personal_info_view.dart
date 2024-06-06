@@ -36,9 +36,9 @@ class PersonalInfoView extends StatelessWidget {
                 TextField(
                   controller: username,
                   decoration: InputDecoration(
-                    hintText: state.currentUserInfo!.username.isEmpty
+                    hintText: state.currentUserInfo!.firstName.isEmpty
                         ? "username"
-                        : state.currentUserInfo!.username,
+                        : state.currentUserInfo!.firstName,
                   ),
                   readOnly: true,
                 ),

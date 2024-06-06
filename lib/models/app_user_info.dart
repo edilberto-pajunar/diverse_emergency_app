@@ -9,26 +9,52 @@ part 'app_user_info.g.dart';
 @JsonSerializable(explicitToJson: true)
 class AppUserInfo extends Equatable {
   final AppUser user;
-  final String username;
+  final String firstName;
+  final String lastName;
+  final String? middleName;
+  final DateTime birthday;
+  final String gender;
   final int activationCode;
   final DateTime? activatedAt;
 
   const AppUserInfo({
     required this.user,
-    required this.username,
     required this.activationCode,
     this.activatedAt,
+    required this.firstName,
+    required this.lastName,
+    this.middleName = "",
+    required this.birthday,
+    required this.gender,
   });
 
   @override
-  List<Object?> get props => [user, username, activationCode, activatedAt];
+  List<Object?> get props => [
+        user,
+        firstName,
+        lastName,
+        middleName,
+        birthday,
+        gender,
+        activationCode,
+        activatedAt,
+      ];
 
   factory AppUserInfo.create({
     required AppUser user,
+    required String firstName,
+    required String lastName,
+    String? middleName,
+    required DateTime birthday,
+    required String gender,
   }) {
     return AppUserInfo(
       user: user,
-      username: "",
+      firstName: firstName,
+      lastName: lastName,
+      middleName: middleName,
+      birthday: birthday,
+      gender: gender,
       activationCode: generateActivationCode(),
     );
   }
@@ -43,13 +69,21 @@ class AppUserInfo extends Equatable {
 
   AppUserInfo copyWith({
     AppUser? user,
-    String? username,
+    String? firstName,
+    String? lastName,
+    String? middleName,
+    DateTime? birthday,
+    String? gender,
     int? activationCode,
     DateTime? activatedAt,
   }) {
     return AppUserInfo(
       user: user ?? this.user,
-      username: username ?? this.username,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      middleName: middleName ?? this.middleName,
+      birthday: birthday ?? this.birthday,
+      gender: gender ?? this.gender,
       activationCode: activationCode ?? this.activationCode,
       activatedAt: activatedAt ?? this.activatedAt,
     );

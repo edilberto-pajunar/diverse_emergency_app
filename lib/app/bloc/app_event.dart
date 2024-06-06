@@ -7,11 +7,15 @@ sealed class AppEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppInitRequested extends AppEvent {}
+class AppInitRequested extends AppEvent {
+}
 
 class AppInitLocationStreamRequested extends AppEvent {}
 
-class AppInitAuthStreamRequested extends AppEvent {}
+class AppInitAuthStreamRequested extends AppEvent {
+
+  const AppInitAuthStreamRequested();
+}
 
 class AppInitUserInfoStreamRequested extends AppEvent {
   final AppUser user;
