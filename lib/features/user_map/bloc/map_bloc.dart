@@ -4,7 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/nearby_place.dart';
 import 'package:emergency_test/repository/place_repository.dart';
 import 'package:equatable/equatable.dart';
-// import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 part 'map_event.dart';
 part 'map_state.dart';
@@ -33,10 +35,26 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         type: event.type,
       );
 
-      emit(state.copyWith(nearbyPlaces: nearbyPlaces));
+      final markers = nearbyPlaces
+          .map((place) => Marker(
+                point:
+                    LatLng(place.location.latitude!, place.location.longitude!),
+                child: const Icon(
+                  Icons.place,
+                  color: Colors.green,
+                ),
+              ))
+          .toList();
+
+      emit(state.copyWith(
+        nearbyPlaces: nearbyPlaces,
+        markers: markers,
+      ));
     } catch (e) {
       log("Error: $e");
-      emit(state.copyWith(nearbyPlaceStatus: NearbyPlaceStatus.failed));
+      emit(state.copyWith(
+        nearbyPlaceStatus: NearbyPlaceStatus.failed,
+      ));
     }
   }
 

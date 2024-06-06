@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:emergency_test/features/auth/view/auth_page.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
+import 'package:emergency_test/features/personal_info.dart/personal_info_page.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
@@ -41,6 +42,13 @@ class AppRouter {
             path: "profile",
             name: UserProfilePage.route,
             builder: (context, state) => const UserProfilePage(),
+            routes: [
+              GoRoute(
+                path: "personalInfo",
+                name: PersonalInfoPage.route,
+                builder: (context, state) => const PersonalInfoPage(),
+              ),
+            ],
           ),
         ],
       ),

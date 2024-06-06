@@ -60,6 +60,7 @@ class _UserMapDetailsState extends State<UserMapDetails> {
                                 LatLng(currentLocation.$1, currentLocation.$2),
                             child: const Icon(Icons.location_on_sharp),
                           ),
+                          ...nearbyPlace.markers,
                         ],
                       )
                     ],

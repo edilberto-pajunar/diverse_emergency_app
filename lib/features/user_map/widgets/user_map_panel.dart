@@ -105,8 +105,8 @@ class UserMapPanel extends StatelessWidget {
                               ListTile(
                                 title: Text(place.displayName.text),
                                 subtitle: Text("Rating: ${place.rating}"),
-                                leading: CircleAvatar(
-                                  child: Text("${index + 1}"),
+                                leading: const CircleAvatar(
+                                  child: Icon(Icons.house_sharp),
                                 ),
                               ),
                             ],
