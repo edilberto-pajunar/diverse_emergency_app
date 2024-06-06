@@ -1,4 +1,5 @@
 import 'package:emergency_test/features/auth/bloc/auth_bloc.dart';
+import 'package:emergency_test/utils/asset.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,8 +44,8 @@ class _AuthViewState extends State<AuthView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.network(
-                        "https://i.pinimg.com/564x/26/61/94/2661948d8f8c6481daa358d0cdc96802.jpg",
+                      Image.asset(
+                        PngImage.logo,
                         height: 150,
                         width: 150,
                       ),
@@ -114,18 +115,18 @@ class _AuthViewState extends State<AuthView> {
                         child: Text(showLogin ? "Log in" : "Sign up"),
                       ),
                       const SizedBox(height: 12.0),
-                      const Text("OR"),
-                      Visibility(
-                        visible: showLogin,
-                        child: Center(
-                          child: TextButton(
-                            onPressed: () => context
-                                .read<AuthBloc>()
-                                .add(AuthAnonymousSignInAttempted()),
-                            child: const Text("Sign in anonymously"),
-                          ),
-                        ),
-                      ),
+                      // const Text("OR"),
+                      // Visibility(
+                      //   visible: showLogin,
+                      //   child: Center(
+                      //     child: TextButton(
+                      //       onPressed: () => context
+                      //           .read<AuthBloc>()
+                      //           .add(AuthAnonymousSignInAttempted()),
+                      //       child: const Text("Sign in anonymously"),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

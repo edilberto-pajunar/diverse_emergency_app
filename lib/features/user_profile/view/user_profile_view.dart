@@ -75,6 +75,25 @@ class UserProfileView extends StatelessWidget {
               icon: Icons.settings,
               onPressed: () {},
             ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                shape: const RoundedRectangleBorder(),
+                backgroundColor: theme.colorScheme.onSurface,
+              ),
+              onPressed: () {
+                context.read<AppBloc>().add(AppSignOutRequested());
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              label: Text(
+                "Sign out",
+                style: theme.textTheme.bodySmall!.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
             const Spacer(),
             Text(
               "v.${version.version}+${version.buildNumber}",

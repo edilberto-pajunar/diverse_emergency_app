@@ -58,9 +58,12 @@ class _HomePageState extends State<HomePage> {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        context.read<AppBloc>().add(AppSignOutRequested());
+                        // context.read<AppBloc>().add(AppSignOutRequested());
                       },
-                      icon: const Icon(Icons.logout),
+                      icon: const Icon(
+                        Icons.gps_fixed,
+                        color: Colors.blue,
+                      ),
                     ),
                   ],
                 ),
