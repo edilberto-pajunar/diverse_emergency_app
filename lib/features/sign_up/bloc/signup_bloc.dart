@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
@@ -7,12 +6,7 @@ part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final GeolocationRepository _geolocationRepository;
-
-  SignUpBloc({
-    required GeolocationRepository geolocationRepository,
-  })  : _geolocationRepository = geolocationRepository,
-        super(const SignUpState()) {
+  SignUpBloc() : super(const SignUpState()) {
     on<SignUpInitRequested>(_onInitRequested);
     on<SignUpPersonalInfoSubmitted>(_onPersonalInfoSubmitted);
     on<SignUpBirthdaySubmitted>(_onBirthdaySubmitted);

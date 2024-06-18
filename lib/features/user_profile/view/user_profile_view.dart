@@ -3,7 +3,6 @@ import 'package:emergency_test/features/personal_info.dart/view/personal_info_pa
 import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
 import 'package:emergency_test/features/user_profile/widgets/setting_tile.dart';
 import 'package:emergency_test/models/app_user_info.dart';
-import 'package:emergency_test/utils/asset.dart';
 import 'package:emergency_test/utils/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

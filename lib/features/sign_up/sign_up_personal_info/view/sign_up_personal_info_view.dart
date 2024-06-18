@@ -1,6 +1,5 @@
 import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/sign_up_home_address/view/sign_up_home_address_page.dart';
-import 'package:emergency_test/features/sign_up/sign_up_security/view/sign_up_security_page.dart';
 import 'package:emergency_test/features/sign_up/widget/layout_body.dart';
 import 'package:emergency_test/utils/fields.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +11,6 @@ class SignUpPersonalInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController firstName = TextEditingController();
-    final TextEditingController lastName = TextEditingController();
-    final TextEditingController middleName = TextEditingController();
     final GlobalKey<FormState> formkey = GlobalKey();
 
     final ThemeData theme = Theme.of(context);
@@ -42,7 +38,6 @@ class SignUpPersonalInfoView extends StatelessWidget {
                   children: [
                     PrimaryTextField(
                       hintText: "First Name",
-                      controller: firstName,
                       validator: (val) {
                         if (val!.isEmpty) {
                           return "This field is required";
@@ -60,7 +55,6 @@ class SignUpPersonalInfoView extends StatelessWidget {
                     ),
                     PrimaryTextField(
                       hintText: "Middle Name",
-                      controller: middleName,
                       initialValue: state.middleName,
                       onChanged: (val) {
                         context

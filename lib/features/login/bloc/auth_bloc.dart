@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:emergency_test/models/app_user.dart';
-import 'package:emergency_test/models/app_user_info.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -10,13 +8,11 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
-  final DatabaseRepository _databaseRepository;
 
   AuthBloc({
     required AuthRepository authRepository,
     required DatabaseRepository databaseRepository,
   })  : _authRepository = authRepository,
-        _databaseRepository = databaseRepository,
         super(const AuthState()) {
     on<AuthAnonymousSignInAttempted>(_onAnonymousSignInAttempted);
     on<AuthSignInFailed>(_onAuthSignInFailed);
@@ -69,7 +65,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (userCred.user == null) return;
     } catch (e) {
-      print(e.runtimeType);
       add(AuthSignInFailed("$e"));
       rethrow;
     }
