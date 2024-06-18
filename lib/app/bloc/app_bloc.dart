@@ -41,7 +41,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onInitLocationStreamRequested(
-      AppInitLocationStreamRequested event, Emitter<AppState> emit) async {
+    AppInitLocationStreamRequested event,
+    Emitter<AppState> emit,
+  ) async {
     emit(state.copyWith(appLocationStatus: AppLocationStatus.loading));
     try {
       final serviceStatus = await Geolocator.isLocationServiceEnabled();
@@ -55,9 +57,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final locationPermission = await Geolocator.checkPermission();
       emit(state.copyWith(locationPermission: locationPermission));
 
-      // final userLocation =
-      //     await _geolocationRepository.getLocation(withAddress: true);
-      // emit(state.copyWith(currentLocation: userLocation));
+      final userLocation =
+          await _geolocationRepository.getLocation(withAddress: true);
+      emit(state.copyWith(currentLocation: userLocation));
 
       await emit.forEach(_geolocationRepository.getLocationStream(),
           onData: (data) => state.copyWith(
@@ -83,9 +85,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await emit.forEach(_authRepository.currentUserStream, onData: (user) {
       if (user == null) return state.copyWith(currentUser: null);
 
-      if (user.id != state.currentUserInfo?.user.id) {
-        add(AppInitUserInfoStreamRequested(user));
-      }
+      // if (user.id != state.currentUserInfo?.user.id) {
+      //   add(AppInitUserInfoStreamRequested(user));
+      // }
 
       // _userRepository.addIfNewUser(user: user, userInfo: event.appUserInfo);
 

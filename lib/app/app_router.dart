@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:emergency_test/features/activate/view/activate_page.dart';
+import 'package:emergency_test/features/add_contact/view/add_contact_page.dart';
 import 'package:emergency_test/features/login/view/login_page.dart';
 import 'package:emergency_test/features/history/view/history_page.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
@@ -36,17 +38,33 @@ class AppRouter {
           GoRoute(
             path: "home_address",
             name: SignUpHomeAddressPage.route,
-            builder: (context, state) => const SignUpHomeAddressPage(),
+            builder: (context, state) => SignUpHomeAddressPage(
+              signUpBloc: (state.extra as Map)["signUpBloc"],
+            ),
           ),
           GoRoute(
             path: "security",
             name: SignUpSecurityPage.route,
-            builder: (context, state) => const SignUpSecurityPage(),
+            builder: (context, state) => SignUpSecurityPage(
+              signUpBloc: (state.extra as Map)["signUpBloc"],
+            ),
           ),
           GoRoute(
             path: "review",
             name: SignUpReviewPage.route,
-            builder: (context, state) => const SignUpReviewPage(),
+            builder: (context, state) => SignUpReviewPage(
+              signUpBloc: (state.extra as Map)["signUpBloc"],
+            ),
+          ),
+          GoRoute(
+            path: "activate",
+            name: ActivatePage.route,
+            builder: (context, state) => const ActivatePage(),
+          ),
+          GoRoute(
+            path: "add_contact",
+            name: AddContactPage.route,
+            builder: (context, state) => const AddContactPage(),
           ),
         ],
       ),

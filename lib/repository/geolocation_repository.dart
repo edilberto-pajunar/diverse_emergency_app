@@ -70,7 +70,6 @@ class GeolocationRepository {
     );
 
     final response = await http.get(addressServiceUrl);
-    print(response);
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body) as Map<String, dynamic>;
       return responseData["display_name"];

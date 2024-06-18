@@ -1,5 +1,6 @@
 import 'package:emergency_test/features/login/bloc/auth_bloc.dart';
 import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
+import 'package:emergency_test/layout/home_page.dart';
 import 'package:emergency_test/utils/asset.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -95,18 +96,6 @@ class _LoginViewState extends State<LoginView> {
                         child: const Text("Log in"),
                       ),
                       const SizedBox(height: 12.0),
-                      // const Text("OR"),
-                      // Visibility(
-                      //   visible: showLogin,
-                      //   child: Center(
-                      //     child: TextButton(
-                      //       onPressed: () => context
-                      //           .read<AuthBloc>()
-                      //           .add(AuthAnonymousSignInAttempted()),
-                      //       child: const Text("Sign in anonymously"),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

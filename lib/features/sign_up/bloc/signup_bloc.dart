@@ -1,13 +1,81 @@
 import 'package:bloc/bloc.dart';
+import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
 
-class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc() : super(SignupInitial()) {
-    on<SignupEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  final GeolocationRepository _geolocationRepository;
+
+  SignUpBloc({
+    required GeolocationRepository geolocationRepository,
+  })  : _geolocationRepository = geolocationRepository,
+        super(const SignUpState()) {
+    on<SignUpInitRequested>(_onInitRequested);
+    on<SignUpPersonalInfoSubmitted>(_onPersonalInfoSubmitted);
+    on<SignUpBirthdaySubmitted>(_onBirthdaySubmitted);
+    on<SignUpGenderSubmitted>(_onGenderSubmitted);
+    on<SignUpHomeAddressRequested>(_onHomeAddressRequested);
+    on<SignUpSecuritySubmitted>(_onSecuritySubmitted);
+  }
+
+  void _onInitRequested(
+    SignUpInitRequested event,
+    Emitter<SignUpState> emit,
+  ) async {}
+
+  void _onPersonalInfoSubmitted(
+    SignUpPersonalInfoSubmitted event,
+    Emitter<SignUpState> emit,
+  ) {
+    emit(state.copyWith(
+      firstName: event.firstName,
+      middleName: event.middleName,
+      lastName: event.lastName,
+    ));
+  }
+
+  void _onBirthdaySubmitted(
+    SignUpBirthdaySubmitted event,
+    Emitter<SignUpState> emit,
+  ) {
+    if (event.birthday == null) return;
+    final birthday = event.birthday;
+    final formattedBirthday = DateFormat("MM/dd/yyyy").format(birthday!);
+
+    emit(state.copyWith(birthday: formattedBirthday));
+  }
+
+  void _onGenderSubmitted(
+    SignUpGenderSubmitted event,
+    Emitter<SignUpState> emit,
+  ) {
+    emit(state.copyWith(gender: event.gender));
+  }
+
+  void _onHomeAddressRequested(
+    SignUpHomeAddressRequested event,
+    Emitter<SignUpState> emit,
+  ) async {
+    emit(state.copyWith(
+      country: event.country,
+      address: event.address,
+    ));
+  }
+
+  void _onSecuritySubmitted(
+    SignUpSecuritySubmitted event,
+    Emitter<SignUpState> emit,
+  ) async {
+    emit(state.copyWith(
+      countryCode: event.countryCode,
+      mobile: event.contactNumber,
+      username: event.username,
+      email: event.emailAddress,
+      password: event.password,
+      confirmPassword: event.confirmPassword,
+    ));
   }
 }

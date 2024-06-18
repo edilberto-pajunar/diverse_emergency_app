@@ -1,5 +1,8 @@
+import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/view/sign_up_view.dart';
+import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
   static String route = "/sign_up_page_route";
@@ -7,6 +10,11 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SignUpView();
+    return BlocProvider(
+      create: (context) => SignUpBloc(
+        geolocationRepository: context.read<GeolocationRepository>(),
+      ),
+      child: const SignUpView(),
+    );
   }
 }

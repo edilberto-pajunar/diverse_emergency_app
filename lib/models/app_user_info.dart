@@ -14,12 +14,12 @@ class AppUserInfo extends Equatable {
   final String? middleName;
   final DateTime birthday;
   final String gender;
-  final int activationCode;
+  final int? activationCode;
   final DateTime? activatedAt;
 
   const AppUserInfo({
     required this.user,
-    required this.activationCode,
+    this.activationCode,
     this.activatedAt,
     required this.firstName,
     required this.lastName,

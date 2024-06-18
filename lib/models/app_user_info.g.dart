@@ -8,7 +8,7 @@ part of 'app_user_info.dart';
 
 AppUserInfo _$AppUserInfoFromJson(Map<String, dynamic> json) => AppUserInfo(
       user: AppUser.fromJson(json['user'] as Map<String, dynamic>),
-      activationCode: (json['activationCode'] as num).toInt(),
+      activationCode: (json['activationCode'] as num?)?.toInt(),
       activatedAt: json['activatedAt'] == null
           ? null
           : DateTime.parse(json['activatedAt'] as String),

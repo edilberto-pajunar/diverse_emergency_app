@@ -6,15 +6,3 @@ sealed class ActivateEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-
-class ActivateCodeSubmitted extends ActivateEvent {
-  final String code;
-  final AppUserInfo user;
-
-  const ActivateCodeSubmitted({
-    required this.code,
-    required this.user,
-  });
-}
-
-class ActivateResendCodeRequested extends ActivateEvent {}
