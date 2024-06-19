@@ -10,6 +10,7 @@ class PrimaryTextField extends StatefulWidget {
   final String? initialValue;
   final Function(String?)? onChanged;
   final bool isPassword;
+  final TextInputType? textInputType;
 
   const PrimaryTextField({
     required this.hintText,
@@ -22,6 +23,7 @@ class PrimaryTextField extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.isPassword = false,
+    this.textInputType,
   });
 
   @override
@@ -37,6 +39,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          keyboardType: widget.textInputType,
           initialValue: widget.initialValue,
           onTap: widget.onTap,
           onChanged: widget.onChanged,

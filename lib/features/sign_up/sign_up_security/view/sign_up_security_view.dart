@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/sign_up_review/view/sign_up_review_page.dart';
 import 'package:emergency_test/features/sign_up/widget/layout_body.dart';
@@ -24,7 +25,6 @@ class _SignUpSecurityViewState extends State<SignUpSecurityView> {
       appBar: AppBar(),
       body: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
-          print(state);
           return Form(
             key: formKey,
             child: LayoutBody(
@@ -46,21 +46,56 @@ class _SignUpSecurityViewState extends State<SignUpSecurityView> {
                     }
                     return null;
                   },
-                  onChanged: (val) {
-                    context.read<SignUpBloc>().add(SignUpSecuritySubmitted(
-                          countryCode: val,
-                        ));
+                  controller:
+                      TextEditingController(text: state.countryCode ?? ""),
+                  readOnly: true,
+                  onTap: () async {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) {
+                        return Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: const Text("+63"),
+                                  subtitle: const Text("Philippines"),
+                                  onTap: () {
+                                    context
+                                      ..read<SignUpBloc>()
+                                          .add(const SignUpSecuritySubmitted(
+                                        countryCode: "63",
+                                      ))
+                                      ..pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
-                  initialValue: state.countryCode,
+                  // onChanged: (val) {
+                  //   context.read<SignUpBloc>().add(SignUpSecuritySubmitted(
+                  //         countryCode: val,
+                  //       ));
+                  // },
                 ),
                 PrimaryTextField(
                   hintText: "Contact Number",
                   validator: (val) {
                     if (val!.isEmpty) {
                       return "This field is required";
+                    } else if (val.length < 10) {
+                      return "Please input a valid phone number.";
                     }
                     return null;
                   },
+                  textInputType: TextInputType.number,
                   onChanged: (val) {
                     context.read<SignUpBloc>().add(SignUpSecuritySubmitted(
                           contactNumber: val,
@@ -88,6 +123,8 @@ class _SignUpSecurityViewState extends State<SignUpSecurityView> {
                   validator: (val) {
                     if (val!.isEmpty) {
                       return "This field is required";
+                    } else if (!EmailValidator.validate(val)) {
+                      return "Please input a valid email.";
                     }
                     return null;
                   },
@@ -100,9 +137,23 @@ class _SignUpSecurityViewState extends State<SignUpSecurityView> {
                 ),
                 PrimaryTextField(
                   hintText: "Password",
-                  validator: (val) {
-                    if (val!.isEmpty) {
+                  validator: (password) {
+                    if (password!.isEmpty) {
                       return "This field is required";
+                    }
+
+                    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
+                    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
+                    bool hasNumber = password.contains(RegExp(r'[0-9]'));
+                    bool hasSpecialCharacter =
+                        password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+
+                    if (password.length < 6 ||
+                        !hasLowercase ||
+                        !hasUppercase ||
+                        !hasNumber ||
+                        !hasSpecialCharacter) {
+                      return "Please input a valid password.";
                     }
                     return null;
                   },
@@ -123,7 +174,9 @@ class _SignUpSecurityViewState extends State<SignUpSecurityView> {
                   },
                   isPassword: true,
                   validator: (val) {
-                    if (val != state.password) {
+                    if (val!.isEmpty) {
+                      return "This field is required";
+                    } else if (val != state.password) {
                       return "Password does not match.";
                     }
                     return null;

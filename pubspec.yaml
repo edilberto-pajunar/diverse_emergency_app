@@ -43,7 +43,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  auto_route_generator: ^8.0.0
   build_runner: ^2.4.9
   json_serializable: ^6.8.0
 

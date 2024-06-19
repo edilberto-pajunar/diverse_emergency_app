@@ -38,12 +38,12 @@ final class SignUpGenderSubmitted extends SignUpEvent {
 }
 
 final class SignUpHomeAddressRequested extends SignUpEvent {
-  final String country;
-  final String address;
+  final String? country;
+  final String? address;
 
   const SignUpHomeAddressRequested({
-    required this.country,
-    required this.address,
+    this.country,
+    this.address,
   });
 }
 
@@ -64,3 +64,5 @@ final class SignUpSecuritySubmitted extends SignUpEvent {
     this.confirmPassword,
   });
 }
+
+final class SignUpRegisterRequested extends SignUpEvent {}

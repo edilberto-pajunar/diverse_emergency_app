@@ -3,6 +3,7 @@ import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/widget/layout_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpReviewView extends StatelessWidget {
@@ -14,8 +15,23 @@ class SignUpReviewView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: BlocBuilder<SignUpBloc, SignUpState>(
+      body: BlocConsumer<SignUpBloc, SignUpState>(
+        listener: (context, state) {
+          if (state.registrationStatus == RegistrationStatus.success) {
+            context.pushNamed(ActivatePage.route);
+          }
+
+          if (state.registrationStatus == RegistrationStatus.failed) {
+            Fluttertoast.showToast(msg: "Something went wrong");
+          }
+        },
         builder: (context, state) {
+          if (state.registrationStatus == RegistrationStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           final name =
               "${state.firstName} ${state.middleName} ${state.lastName}";
 
@@ -57,7 +73,7 @@ class SignUpReviewView extends StatelessWidget {
               const Divider(),
               const Text("Address"),
               Text(
-                "${state.country}",
+                "${state.address}",
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -73,7 +89,7 @@ class SignUpReviewView extends StatelessWidget {
               const Divider(),
               const Text("Email Address"),
               Text(
-                "pajunar0@gmail.com",
+                state.email ?? "",
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -92,7 +108,9 @@ class SignUpReviewView extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        context.pushNamed(ActivatePage.route);
+                        context
+                            .read<SignUpBloc>()
+                            .add(SignUpRegisterRequested());
                       },
                       child: const Text("CONFIRM"),
                     ),

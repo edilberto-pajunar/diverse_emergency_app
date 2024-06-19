@@ -1,8 +1,5 @@
 import 'package:emergency_test/utils/fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:share_plus/share_plus.dart';
 
 class InvitationView extends StatelessWidget {
   const InvitationView({super.key});

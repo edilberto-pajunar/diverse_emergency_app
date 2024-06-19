@@ -34,22 +34,34 @@ class _SignUpHomeAddressViewState extends State<SignUpHomeAddressView> {
           const SizedBox(height: 24.0),
           BlocBuilder<SignUpBloc, SignUpState>(
             builder: (context, state) {
-              if (state.address == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
               return Column(
                 children: [
+                  TextButton(
+                    onPressed: () {
+                      context
+                          .read<SignUpBloc>()
+                          .add(const SignUpHomeAddressRequested());
+                    },
+                    child: const Text("Use my current location"),
+                  ),
                   PrimaryTextField(
                     hintText: "Country",
-                    initialValue: state.country,
+                    controller: TextEditingController(text: state.country),
+                    onChanged: (val) {
+                      context.read<SignUpBloc>().add(SignUpHomeAddressRequested(
+                            country: val,
+                          ));
+                    },
                   ),
                   PrimaryTextField(
                     hintText: "Address",
                     maxLines: 5,
-                    initialValue: state.address,
+                    controller: TextEditingController(text: state.address),
+                    onChanged: (val) {
+                      context.read<SignUpBloc>().add(SignUpHomeAddressRequested(
+                            address: val,
+                          ));
+                    },
                   ),
                 ],
               );

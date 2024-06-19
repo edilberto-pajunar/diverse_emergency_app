@@ -1,5 +1,7 @@
 part of 'signup_bloc.dart';
 
+enum RegistrationStatus { idle, loading, success, failed }
+
 final class SignUpState extends Equatable {
   final String? email;
   final String? username;
@@ -17,6 +19,7 @@ final class SignUpState extends Equatable {
   final String? confirmDuressPassword;
   final String? relationship;
   final String? address;
+  final RegistrationStatus registrationStatus;
 
   const SignUpState({
     this.email,
@@ -35,6 +38,7 @@ final class SignUpState extends Equatable {
     this.confirmDuressPassword,
     this.relationship,
     this.address,
+    this.registrationStatus = RegistrationStatus.idle,
   });
 
   SignUpState copyWith({
@@ -54,6 +58,7 @@ final class SignUpState extends Equatable {
     String? confirmDuressPassword,
     String? relationship,
     String? address,
+    RegistrationStatus? registrationStatus,
   }) {
     return SignUpState(
       email: email ?? this.email,
@@ -73,6 +78,7 @@ final class SignUpState extends Equatable {
           confirmDuressPassword ?? this.confirmDuressPassword,
       relationship: relationship ?? this.relationship,
       address: address ?? this.address,
+      registrationStatus: registrationStatus ?? this.registrationStatus,
     );
   }
 
@@ -94,5 +100,6 @@ final class SignUpState extends Equatable {
         confirmDuressPassword,
         relationship,
         address,
+        registrationStatus,
       ];
 }

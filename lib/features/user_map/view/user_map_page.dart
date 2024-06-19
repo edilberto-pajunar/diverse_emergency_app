@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:emergency_test/features/user_map/bloc/map_bloc.dart';
 import 'package:emergency_test/features/user_map/view/user_map_view.dart';
 import 'package:emergency_test/repository/place_repository.dart';

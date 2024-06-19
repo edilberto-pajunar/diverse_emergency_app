@@ -171,11 +171,11 @@ class SignUpPersonalInfoView extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (formkey.currentState!.validate()) {
-                        context.pushNamed(SignUpHomeAddressPage.route, extra: {
-                          "signUpBloc": context.read<SignUpBloc>(),
-                        });
-                      }
+                      // if (formkey.currentState!.validate()) {
+                      context.pushNamed(SignUpHomeAddressPage.route, extra: {
+                        "signUpBloc": context.read<SignUpBloc>(),
+                      });
+                      // }
                     },
                     child: const Text("NEXT"),
                   ),

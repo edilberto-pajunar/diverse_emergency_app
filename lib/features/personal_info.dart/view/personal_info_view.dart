@@ -8,7 +8,6 @@ class PersonalInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController email = TextEditingController();
-    final TextEditingController username = TextEditingController();
     final ThemeData theme = Theme.of(context);
 
     return Scaffold(
@@ -32,16 +31,6 @@ class PersonalInfoView extends StatelessWidget {
                   ),
                   readOnly: true,
                 ),
-                const SizedBox(height: 12.0),
-                // TextField(
-                //   controller: username,
-                //   decoration: InputDecoration(
-                //     hintText: state.currentUserInfo!.firstName.isEmpty
-                //         ? "username"
-                //         : state.currentUserInfo!.firstName,
-                //   ),
-                //   readOnly: true,
-                // ),
                 const SizedBox(height: 12.0),
               ],
             ),

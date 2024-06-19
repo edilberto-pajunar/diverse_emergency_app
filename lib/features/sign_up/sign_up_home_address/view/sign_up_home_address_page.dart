@@ -1,4 +1,3 @@
-import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/sign_up_home_address/view/sign_up_home_address_view.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +14,9 @@ class SignUpHomeAddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final address = context.read<AppBloc>().state.currentLocation;
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: context.read<AppBloc>(),
-        ),
-        BlocProvider.value(
-          value: signUpBloc
-            ..add(
-              SignUpHomeAddressRequested(
-                country: address?.address!.split(",").last ?? "",
-                address: address?.address! ?? "",
-              ),
-            ),
-        ),
+        BlocProvider.value(value: signUpBloc),
       ],
       child: const SignUpHomeAddressView(),
     );

@@ -57,9 +57,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final locationPermission = await Geolocator.checkPermission();
       emit(state.copyWith(locationPermission: locationPermission));
 
-      final userLocation =
-          await _geolocationRepository.getLocation(withAddress: true);
-      emit(state.copyWith(currentLocation: userLocation));
+      // final userLocation =
+      //     await _geolocationRepository.getLocation(withAddress: true);
+      // emit(state.copyWith(currentLocation: userLocation));
 
       await emit.forEach(_geolocationRepository.getLocationStream(),
           onData: (data) => state.copyWith(
