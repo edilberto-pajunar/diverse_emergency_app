@@ -1,6 +1,7 @@
 import 'package:emergency_test/features/login/bloc/auth_bloc.dart';
 import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
 import 'package:emergency_test/utils/asset.dart';
+import 'package:emergency_test/utils/fields.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,11 +59,10 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                       const SizedBox(height: 12.0),
-                      TextField(
+                      PrimaryTextField(
                         controller: password,
-                        decoration: const InputDecoration(
-                          hintText: "password",
-                        ),
+                        hintText: "Password",
+                        isPassword: true,
                       ),
                       const SizedBox(height: 4.0),
                       Align(

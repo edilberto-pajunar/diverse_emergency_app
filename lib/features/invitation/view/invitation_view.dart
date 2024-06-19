@@ -1,3 +1,4 @@
+import 'package:emergency_test/utils/fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,8 +11,17 @@ class InvitationView extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    const shareImage =
-        "https://plus.unsplash.com/premium_photo-1668051040456-24c63abd95b4?q=80&w=1876&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    final List<String> type = [
+      "Acquaintance",
+      "Aunt",
+      "Brother",
+      "Child",
+      "Close friend",
+      "Co-Worker",
+      "Cousing",
+      "Doctor"
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Invite"),
@@ -19,37 +29,54 @@ class InvitationView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              shareImage,
-              height: 300,
-            ),
-            const SizedBox(height: 12.0),
             Text(
-              "Invite your loved ones",
+              "Send Invites",
               style: theme.textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 12.0),
             const Text(
-              "Inviting someone will help you to track where you are and you can feel safe with them.",
-              textAlign: TextAlign.center,
+                "Make sure to invite only a person who knows you and close to you."),
+            Text(
+              "e.g. family ,relatives, husband, wife, your children, close friends, co-workers, attending physician, etc.",
+              style: theme.textTheme.labelSmall,
             ),
             const SizedBox(height: 24.0),
-            ElevatedButton.icon(
-              onPressed: () => Share.share("check out my website "),
-              label: const Text("Share your link"),
-              icon: const Icon(Icons.share),
-            ),
-            ElevatedButton.icon(
-              onPressed: () async {
-                await Clipboard.setData(
-                    const ClipboardData(text: "check out my website"));
-
-                Fluttertoast.showToast(msg: "Copy to clibboard");
+            PrimaryTextField(
+              hintText: "Select Relationship",
+              readOnly: true,
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (_) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text("Family"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
-              label: const Text("Copy your link"),
+            ),
+            const SizedBox(height: 12.0),
+            const Text(
+                "Note: Sending invites outside your registered country via sms will require a top up. You may top up now here."),
+            const SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text(
+                "INVITE NOW",
+              ),
             ),
           ],
         ),

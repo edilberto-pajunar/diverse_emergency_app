@@ -50,21 +50,38 @@ class _HomePageState extends State<HomePage> {
     return BlocSelector<AppBloc, AppState, AppUserInfo?>(
       selector: (state) => state.currentUserInfo,
       builder: (context, state) {
-        if (state == null) return Container();
-        return state.activatedAt == null
+        if (state == null) {
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.read<AppBloc>().add(AppSignOutRequested());
+                  },
+                  icon: const Icon(
+                    Icons.gps_fixed,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        // return state.activatedAt == null
+        return false
             ? const ActivatePage()
             : Scaffold(
                 appBar: AppBar(
                   actions: [
-                    IconButton(
-                      onPressed: () {
-                        // context.read<AppBloc>().add(AppSignOutRequested());
-                      },
-                      icon: const Icon(
-                        Icons.gps_fixed,
-                        color: Colors.blue,
-                      ),
-                    ),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     context.read<AppBloc>().add(AppSignOutRequested());
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons.gps_fixed,
+                    //     color: Colors.blue,
+                    //   ),
+                    // ),
                   ],
                 ),
                 drawer: const UserInfoDrawer(),

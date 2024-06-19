@@ -85,9 +85,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await emit.forEach(_authRepository.currentUserStream, onData: (user) {
       if (user == null) return state.copyWith(currentUser: null);
 
-      // if (user.id != state.currentUserInfo?.user.id) {
-      //   add(AppInitUserInfoStreamRequested(user));
-      // }
+      if (user.id != state.currentUserInfo?.user.id) {
+        add(AppInitUserInfoStreamRequested(user));
+      }
 
       // _userRepository.addIfNewUser(user: user, userInfo: event.appUserInfo);
 

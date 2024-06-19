@@ -16,5 +16,17 @@ class AppTheme {
       errorBorder: border,
       enabledBorder: border,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    listTileTheme: const ListTileThemeData(
+      contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+      dense: true,
+      visualDensity: VisualDensity.compact,
+    ),
   );
 }

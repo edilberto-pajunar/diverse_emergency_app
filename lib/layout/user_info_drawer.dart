@@ -38,32 +38,104 @@ class UserInfoDrawer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // const ListTile(
-                    //   title: Text("Contacts"),
-                    //   trailing: Icon(
-                    //     Icons.arrow_forward_ios_sharp,
-                    //   ),
-                    //   leading: Icon(Icons.contact_phone_outlined),
-                    // ),
-                    // const Divider(),
                     ListTile(
                       title: const Text("History"),
                       trailing: const Icon(
                         Icons.arrow_forward_ios_sharp,
                       ),
                       leading: const Icon(Icons.history),
-                      onTap: () => context.pushNamed(HistoryPage.route),
+                      onTap: () {},
                     ),
                     const Divider(),
                     ListTile(
-                      title: const Text("Invite a person"),
+                      title: const Text("Connect"),
                       trailing: const Icon(
                         Icons.arrow_forward_ios_sharp,
                       ),
-                      leading: const Icon(Icons.share),
-                      onTap: () => context.push("/invitation"),
+                      leading: const Icon(Icons.connected_tv_rounded),
+                      onTap: () {},
                     ),
                     const Divider(),
+
+                    ListTile(
+                      title: const Text("Account Settings"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const Icon(Icons.person_2_rounded),
+                      onTap: () {},
+                    ),
+                    const Divider(),
+
+                    ListTile(
+                      title: const Text("Topup"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const SizedBox(),
+                      onTap: () {},
+                    ),
+                    const Divider(),
+
+                    ListTile(
+                      title: const Text("History"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const Icon(Icons.history),
+                      onTap: () {},
+                    ),
+                    const Divider(),
+
+                    ListTile(
+                      title: const Text("GPS Tracker"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const Icon(Icons.track_changes_rounded),
+                      onTap: () {},
+                    ),
+                    const Divider(),
+
+                    ListTile(
+                      title: const Text("FAQs"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const SizedBox(),
+                      onTap: () {},
+                    ),
+
+                    // ListTile(
+                    //   title: const Text("Invite a person"),
+                    //   trailing: const Icon(
+                    //     Icons.arrow_forward_ios_sharp,
+                    //   ),
+                    //   leading: const Icon(Icons.share),
+                    //   onTap: () => context.push("/invitation"),
+                    // ),
+
+                    const Divider(),
+                    ListTile(
+                      title: const Text("Logout"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const Icon(Icons.logout),
+                      onTap: () {
+                        context.read<AppBloc>().add(AppSignOutRequested());
+                      },
+                    ),
+
+                    // IconButton(
+                    // //   onPressed: () {
+                    // //     context.read<AppBloc>().add(AppSignOutRequested());
+                    // //   },
+                    // //   icon: const Icon(
+                    // //     Icons.gps_fixed,
+                    // //     color: Colors.blue,
+                    // //   ),
+                    // // ),
                     const Spacer(),
                     const Padding(
                       padding: EdgeInsets.all(20.0),

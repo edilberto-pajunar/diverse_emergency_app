@@ -33,15 +33,15 @@ class PersonalInfoView extends StatelessWidget {
                   readOnly: true,
                 ),
                 const SizedBox(height: 12.0),
-                TextField(
-                  controller: username,
-                  decoration: InputDecoration(
-                    hintText: state.currentUserInfo!.firstName.isEmpty
-                        ? "username"
-                        : state.currentUserInfo!.firstName,
-                  ),
-                  readOnly: true,
-                ),
+                // TextField(
+                //   controller: username,
+                //   decoration: InputDecoration(
+                //     hintText: state.currentUserInfo!.firstName.isEmpty
+                //         ? "username"
+                //         : state.currentUserInfo!.firstName,
+                //   ),
+                //   readOnly: true,
+                // ),
                 const SizedBox(height: 12.0),
               ],
             ),

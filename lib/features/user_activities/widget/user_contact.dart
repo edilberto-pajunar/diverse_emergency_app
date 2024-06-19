@@ -48,9 +48,11 @@ class UserContact extends StatelessWidget {
                 ),
                 const SizedBox(width: 12.0),
                 ElevatedButton(
-                  onPressed: () => context.read<UserActivitiesBloc>().add(
-                      const UserContactTypeTapped(
-                          contactType: ContactType.taglist)),
+                  onPressed: () => context
+                      .read<UserActivitiesBloc>()
+                      .add(const UserContactTypeTapped(
+                        contactType: ContactType.taglist,
+                      )),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: state.contactType == ContactType.taglist
                         ? theme.colorScheme.secondary

@@ -9,11 +9,11 @@ part 'app_user_info.g.dart';
 @JsonSerializable(explicitToJson: true)
 class AppUserInfo extends Equatable {
   final AppUser user;
-  final String firstName;
-  final String lastName;
-  final String? middleName;
-  final DateTime birthday;
-  final String gender;
+  // final String firstName;
+  // final String lastName;
+  // final String? middleName;
+  // final DateTime birthday;
+  // final String gender;
   final int? activationCode;
   final DateTime? activatedAt;
 
@@ -21,40 +21,40 @@ class AppUserInfo extends Equatable {
     required this.user,
     this.activationCode,
     this.activatedAt,
-    required this.firstName,
-    required this.lastName,
-    this.middleName = "",
-    required this.birthday,
-    required this.gender,
+    // required this.firstName,
+    // required this.lastName,
+    // this.middleName = "",
+    // required this.birthday,
+    // required this.gender,
   });
 
   @override
   List<Object?> get props => [
         user,
-        firstName,
-        lastName,
-        middleName,
-        birthday,
-        gender,
+        // firstName,
+        // lastName,
+        // middleName,
+        // birthday,
+        // gender,
         activationCode,
         activatedAt,
       ];
 
   factory AppUserInfo.create({
     required AppUser user,
-    required String firstName,
-    required String lastName,
-    String? middleName,
-    required DateTime birthday,
-    required String gender,
+    // required String firstName,
+    // required String lastName,
+    // String? middleName,
+    // required DateTime birthday,
+    // required String gender,
   }) {
     return AppUserInfo(
       user: user,
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      birthday: birthday,
-      gender: gender,
+      // firstName: firstName,
+      // lastName: lastName,
+      // middleName: middleName,
+      // birthday: birthday,
+      // gender: gender,
       activationCode: generateActivationCode(),
     );
   }
@@ -79,11 +79,11 @@ class AppUserInfo extends Equatable {
   }) {
     return AppUserInfo(
       user: user ?? this.user,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      middleName: middleName ?? this.middleName,
-      birthday: birthday ?? this.birthday,
-      gender: gender ?? this.gender,
+      // firstName: firstName ?? this.firstName,
+      // lastName: lastName ?? this.lastName,
+      // middleName: middleName ?? this.middleName,
+      // birthday: birthday ?? this.birthday,
+      // gender: gender ?? this.gender,
       activationCode: activationCode ?? this.activationCode,
       activatedAt: activatedAt ?? this.activatedAt,
     );

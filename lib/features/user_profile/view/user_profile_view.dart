@@ -44,14 +44,76 @@ class UserProfileView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  title: Text(
-                    userInfo!.firstName.isEmpty ? "guest" : userInfo.firstName,
+                  title: const Text(
+                    "Guest",
                   ),
-                  subtitle: Text("${userInfo.user.email}"),
+                  subtitle: const Text("pajunar0@gmail.com"),
                 );
               },
             ),
             const Divider(),
+            Text(
+              "Information",
+              style: theme.textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "0",
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(
+                      "Credit",
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "0",
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text("Tag"),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "0",
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text("Tag by"),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "1",
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text("Level"),
+                  ],
+                ),
+              ],
+            ),
             const SizedBox(height: 12.0),
             Text(
               "Settings",
@@ -73,25 +135,6 @@ class UserProfileView extends StatelessWidget {
               title: "Accessibilty",
               icon: Icons.settings,
               onPressed: () {},
-            ),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                shape: const RoundedRectangleBorder(),
-                backgroundColor: theme.colorScheme.onSurface,
-              ),
-              onPressed: () {
-                context.read<AppBloc>().add(AppSignOutRequested());
-              },
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
-              label: Text(
-                "Sign out",
-                style: theme.textTheme.bodySmall!.copyWith(
-                  color: Colors.white,
-                ),
-              ),
             ),
             const Spacer(),
             Text(

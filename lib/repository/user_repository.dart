@@ -25,10 +25,10 @@ class UserRepository {
       path: userPath,
       data: AppUserInfo.create(
         user: user,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        birthday: userInfo.birthday,
-        gender: userInfo.gender,
+        // firstName: userInfo.firstName,
+        // lastName: userInfo.lastName,
+        // birthday: userInfo.birthday,
+        // gender: userInfo.gender,
       ).toJson(),
     );
   }
