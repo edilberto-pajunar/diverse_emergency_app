@@ -1,10 +1,26 @@
 part of 'activate_bloc.dart';
 
-sealed class ActivateState extends Equatable {
-  const ActivateState();
-  
-  @override
-  List<Object> get props => [];
-}
+enum SendEmailStatus { idle, loading, success, failed }
 
-final class ActivateInitial extends ActivateState {}
+final class ActivateState extends Equatable {
+  final SendEmailStatus sendEmailStatus;
+  final String? error;
+
+  const ActivateState({
+    this.sendEmailStatus = SendEmailStatus.idle,
+    this.error = "",
+  });
+
+  ActivateState copyWith({
+    SendEmailStatus? sendEmailStatus,
+    String? error,
+  }) {
+    return ActivateState(
+      sendEmailStatus: sendEmailStatus ?? this.sendEmailStatus,
+      error: error ?? this.error,
+    );
+  }
+
+  @override
+  List<Object?> get props => [sendEmailStatus, error];
+}

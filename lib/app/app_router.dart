@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/activate/view/activate_page.dart';
 import 'package:emergency_test/features/add_contact/view/add_contact_page.dart';
 import 'package:emergency_test/features/login/view/login_page.dart';
@@ -14,19 +15,21 @@ import 'package:emergency_test/features/user_activities/view/user_activities_pag
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
 import 'package:emergency_test/layout/home_page.dart';
-import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  final AuthRepository _authRepository;
+  final AppBloc _appBloc;
 
-  AppRouter(this._authRepository);
+  AppRouter(this._appBloc);
+
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   late final GoRouter config = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
-        path: "/login",
+        path: "/",
         name: LoginPage.route,
         builder: (context, state) => const LoginPage(),
         routes: [
@@ -69,7 +72,7 @@ class AppRouter {
         ],
       ),
       GoRoute(
-        path: "/",
+        path: "/home",
         name: HomePage.route,
         builder: (context, state) => const HomePage(),
         routes: [
@@ -108,37 +111,47 @@ class AppRouter {
         builder: (context, state) => const HistoryPage(),
       ),
     ],
-    redirect: (context, state) async {
-      final currentUser = await _authRepository.currentUserStream.first;
-      final isLoggedIn = currentUser != null;
+    // redirect: (context, state) async {
+    //   print(state.matchedLocation);
+    //   print(appBloc.state);
+    //   if (appBloc.state.appAuthStatus == AppAuthStatus.authenticated) {
+    //     return context.namedLocation("/");
+    //   } else {
+    //     return "/login";
+    //   }
+    // },
+    // redirect: (context, state) async {
+    //   final currentUser = _appBloc.state.appAuthStatus;
 
-      final loggingIn = state.matchedLocation.startsWith("/login");
+    //   final isLoggedIn = currentUser == AppAuthStatus.authenticated;
 
-      if (!isLoggedIn) return loggingIn ? null : "/login";
+    //   final loggingIn = state.matchedLocation.startsWith("/login");
 
-      if (loggingIn) return "/";
+    //   print(loggingIn);
 
-      return null;
-    },
-    refreshListenable: _GoRouterRefreshStream(
-      _authRepository.currentUserStream,
-    ),
+    //   if (!isLoggedIn) return loggingIn ? null : "/login";
+
+    //   if (loggingIn) return "/";
+
+    //   return null;
+    // },
+    // refreshListenable: _GoRouterRefreshStream(appBloc.stream),
   );
 }
 
-class _GoRouterRefreshStream extends ChangeNotifier {
-  _GoRouterRefreshStream(Stream<dynamic> stream) {
-    notifyListeners();
-    _subscription = stream.asBroadcastStream().listen(
-          (_) => notifyListeners(),
-        );
-  }
+// class _GoRouterRefreshStream extends ChangeNotifier {
+//   late final StreamSubscription<dynamic> _subscription;
 
-  late final StreamSubscription<dynamic> _subscription;
+//   _GoRouterRefreshStream(Stream<dynamic> stream) {
+//     notifyListeners();
+//     _subscription = stream.asBroadcastStream().listen(
+//           (_) => notifyListeners(),
+//         );
+//   }
 
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
-}
+//   @override
+//   void dispose() {
+//     _subscription.cancel();
+//     super.dispose();
+//   }
+// }

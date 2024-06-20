@@ -24,13 +24,13 @@ class PersonalInfoView extends StatelessWidget {
                   style: theme.textTheme.titleLarge,
                 ),
                 const SizedBox(height: 24.0),
-                TextField(
-                  controller: email,
-                  decoration: InputDecoration(
-                    hintText: state.currentUserInfo!.user.email,
-                  ),
-                  readOnly: true,
-                ),
+                // TextField(
+                //   controller: email,
+                //   decoration: InputDecoration(
+                //     hintText: state.currentUserInfo!.user.email,
+                //   ),
+                //   readOnly: true,
+                // ),
                 const SizedBox(height: 12.0),
               ],
             ),

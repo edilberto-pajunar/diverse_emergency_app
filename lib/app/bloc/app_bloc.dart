@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/models/app_user.dart';
-import 'package:emergency_test/models/app_user_info.dart';
+import 'package:emergency_test/models/member.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/local_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
@@ -26,8 +27,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         super(const AppState()) {
     on<AppInitRequested>(_onInitRequested);
     on<AppInitLocationStreamRequested>(_onInitLocationStreamRequested);
-    on<AppInitAuthStreamRequested>(_onAppInitAuthStreamRequested);
-    on<AppInitUserInfoStreamRequested>(_onInitUserInfoStreamRequested);
+    on<AppInitAuthRequested>(_onAppInitAuthRequested);
     on<AppSignOutRequested>(_onSignOutRequested);
     on<AppSignOutFailed>(_onSignOutFailed);
   }
@@ -36,7 +36,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitRequested event,
     Emitter<AppState> emit,
   ) {
-    add(const AppInitAuthStreamRequested());
+    add(const AppInitAuthRequested());
     add(AppInitLocationStreamRequested());
   }
 
@@ -78,31 +78,37 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  void _onAppInitAuthStreamRequested(
-    AppInitAuthStreamRequested event,
+  void _onAppInitAuthRequested(
+    AppInitAuthRequested event,
     Emitter<AppState> emit,
   ) async {
-    await emit.forEach(_authRepository.currentUserStream, onData: (user) {
-      if (user == null) return state.copyWith(currentUser: null);
+    final token = LocalRepository.getString("token");
 
-      if (user.id != state.currentUserInfo?.user.id) {
-        add(AppInitUserInfoStreamRequested(user));
-      }
+    if (token == null) return;
 
-      // _userRepository.addIfNewUser(user: user, userInfo: event.appUserInfo);
+    final member = await _authRepository.getMemberInfo(token);
 
-      return state.copyWith(currentUser: user);
-    });
-  }
+    emit(state.copyWith(
+      currentUserInfo: event.currentUserInfo,
+      appAuthStatus: AppAuthStatus.authenticated,
+      member: member,
+    ));
+    // final email = LocalRepository.getString("email");
+    // final password = LocalRepository.getString("password");
 
-  void _onInitUserInfoStreamRequested(
-    AppInitUserInfoStreamRequested event,
-    Emitter<AppState> emit,
-  ) async {
-    await emit.forEach(_userRepository.userInfoStream(event.user.id),
-        onData: (userInfo) => state.copyWith(
-              currentUserInfo: userInfo,
-            ));
+    // if (email!.isEmpty || password!.isEmpty) return;
+
+    // try {
+    //   final appUser =
+    //       await _authRepository.signInWithEmailAndPassword(email, password);
+
+    //   emit(state.copyWith(
+    //     currentUserInfo: appUser,
+    //     appAuthStatus: AppAuthStatus.authenticated,
+    //   ));
+    // } catch (e) {
+    //   rethrow;
+    // }
   }
 
   void _onSignOutRequested(
@@ -114,7 +120,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       await _authRepository.logOut();
       emit(state.copyWith(
         signoutStatus: SignoutStatus.signOutSuccess,
-        currentUser: null,
+        appAuthStatus: AppAuthStatus.unauthenticated,
       ));
     } catch (e) {
       add(AppSignOutFailed(e as Exception));
@@ -128,4 +134,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) {
     emit(state.copyWith(signoutStatus: SignoutStatus.signOutFailure));
   }
+
+  // void _onAuthenticatedTriggered(
+  //   AppAuthenticatedTriggered event,
+  //   Emitter<AppState> emit,
+  // ) async {
+  //   LocalRepository.setString("auth", AppAuthStatus.authenticated.toString());
+
+  //   emit(state.copyWith(
+  //     appAuthStatus: AppAuthStatus.authenticated,
+  //   ));
+  // }
 }

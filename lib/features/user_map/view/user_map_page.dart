@@ -4,7 +4,6 @@ import 'package:emergency_test/repository/place_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage()
 class UserMapPage extends StatelessWidget {
   static String route = "user_map_page_route";
 

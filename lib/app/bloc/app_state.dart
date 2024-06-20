@@ -1,5 +1,7 @@
 part of 'app_bloc.dart';
 
+enum AppAuthStatus { authenticated, unauthenticated }
+
 enum AppLocationStatus { idle, loading, success, failed }
 
 enum SignoutStatus { signingOut, signOutSuccess, signOutFailure }
@@ -9,9 +11,10 @@ final class AppState extends Equatable {
   final LocationPermission? locationPermission;
   final AppLocation? currentLocation;
   final AppLocationStatus appLocationStatus;
-  final AppUserInfo? currentUserInfo;
-  final AppUser? currentUser;
+  final AppUser? currentUserInfo;
   final SignoutStatus? signoutStatus;
+  final AppAuthStatus appAuthStatus;
+  final Member? member;
 
   const AppState({
     this.serviceStatus,
@@ -19,8 +22,9 @@ final class AppState extends Equatable {
     this.currentLocation,
     this.appLocationStatus = AppLocationStatus.idle,
     this.currentUserInfo,
-    this.currentUser,
     this.signoutStatus,
+    this.appAuthStatus = AppAuthStatus.unauthenticated,
+    this.member,
   });
 
   AppState copyWith({
@@ -28,9 +32,10 @@ final class AppState extends Equatable {
     LocationPermission? locationPermission,
     AppLocation? currentLocation,
     AppLocationStatus? appLocationStatus,
-    AppUserInfo? currentUserInfo,
-    AppUser? currentUser,
+    AppUser? currentUserInfo,
     SignoutStatus? signoutStatus,
+    AppAuthStatus? appAuthStatus,
+    Member? member,
   }) {
     return AppState(
       serviceStatus: serviceStatus ?? this.serviceStatus,
@@ -38,8 +43,9 @@ final class AppState extends Equatable {
       currentLocation: currentLocation ?? this.currentLocation,
       appLocationStatus: appLocationStatus ?? this.appLocationStatus,
       currentUserInfo: currentUserInfo ?? this.currentUserInfo,
-      currentUser: currentUser ?? this.currentUser,
       signoutStatus: signoutStatus ?? this.signoutStatus,
+      appAuthStatus: appAuthStatus ?? this.appAuthStatus,
+      member: member ?? this.member,
     );
   }
 
@@ -50,7 +56,8 @@ final class AppState extends Equatable {
         currentLocation,
         appLocationStatus,
         currentUserInfo,
-        currentUser,
         signoutStatus,
+        appAuthStatus,
+        member,
       ];
 }

@@ -5,12 +5,14 @@ import 'package:emergency_test/firebase_options.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/local_repository.dart';
 import 'package:emergency_test/repository/place_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
 import 'package:emergency_test/utils/version.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await LocalRepository.init();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runAppIn();
 }
 

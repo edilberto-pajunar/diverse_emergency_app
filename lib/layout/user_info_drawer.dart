@@ -12,7 +12,7 @@ class UserInfoDrawer extends StatelessWidget {
         "https://i.pinimg.com/564x/1e/44/65/1e44653d5d836e2d61d89b63da8b467a.jpg";
 
     return BlocSelector<AppBloc, AppState, AppUser?>(
-      selector: (state) => state.currentUser,
+      selector: (state) => state.currentUserInfo,
       builder: (context, currentUser) {
         return Drawer(
           child: currentUser == null
@@ -32,7 +32,7 @@ class UserInfoDrawer extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 12.0),
-                          Text(currentUser.email!),
+                          Text(currentUser.fullName!),
                         ],
                       ),
                     ),

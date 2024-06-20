@@ -2,7 +2,7 @@ import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/personal_info.dart/view/personal_info_page.dart';
 import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
 import 'package:emergency_test/features/user_profile/widgets/setting_tile.dart';
-import 'package:emergency_test/models/app_user_info.dart';
+import 'package:emergency_test/models/app_user.dart';
 import 'package:emergency_test/utils/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +30,7 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12.0),
-            BlocSelector<AppBloc, AppState, AppUserInfo?>(
+            BlocSelector<AppBloc, AppState, AppUser?>(
               selector: (state) => state.currentUserInfo,
               builder: (context, userInfo) {
                 return ListTile(

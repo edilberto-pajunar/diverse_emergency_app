@@ -7,19 +7,16 @@ sealed class AppEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppInitRequested extends AppEvent {
-}
+class AppInitRequested extends AppEvent {}
 
 class AppInitLocationStreamRequested extends AppEvent {}
 
-class AppInitAuthStreamRequested extends AppEvent {
+class AppInitAuthRequested extends AppEvent {
+  final AppUser? currentUserInfo;
 
-  const AppInitAuthStreamRequested();
-}
-
-class AppInitUserInfoStreamRequested extends AppEvent {
-  final AppUser user;
-  const AppInitUserInfoStreamRequested(this.user);
+  const AppInitAuthRequested({
+    this.currentUserInfo,
+  });
 }
 
 class AppSignOutRequested extends AppEvent {}

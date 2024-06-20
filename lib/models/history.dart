@@ -1,5 +1,5 @@
 import 'package:emergency_test/models/app_location.dart';
-import 'package:emergency_test/models/app_user_info.dart';
+import 'package:emergency_test/models/app_user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,7 +7,7 @@ part 'history.g.dart';
 
 @JsonSerializable()
 class History extends Equatable {
-  final AppUserInfo userInfo;
+  final AppUser userInfo;
   final AppLocation currentLocation;
 
   const History({

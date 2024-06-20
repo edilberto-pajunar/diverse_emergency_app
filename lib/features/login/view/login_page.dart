@@ -1,4 +1,5 @@
-import 'package:emergency_test/features/login/bloc/auth_bloc.dart';
+import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/login/bloc/login_bloc.dart';
 import 'package:emergency_test/features/login/view/login_view.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
@@ -11,11 +12,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(
-        authRepository: context.read<AuthRepository>(),
-        databaseRepository: context.read<DatabaseRepository>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginBloc(
+            authRepository: context.read<AuthRepository>(),
+            databaseRepository: context.read<DatabaseRepository>(),
+          ),
+        ),
+        BlocProvider.value(
+          value: context.read<AppBloc>(),
+        ),
+      ],
       child: const LoginView(),
     );
   }

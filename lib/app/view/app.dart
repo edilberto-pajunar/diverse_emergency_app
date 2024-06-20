@@ -31,8 +31,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late final AppRouter _appRouter = AppRouter(widget.authRepository);
-
   @override
   void initState() {
     super.initState();
@@ -45,7 +43,7 @@ class _AppState extends State<App> {
       geolocationRepository: widget.geolocationRepository,
       authRepository: widget.authRepository,
       userRepository: widget.userRepository,
-    )..add(AppInitRequested());
+    );
 
     AppLifecycleListener(
       onStateChange: (state) {
@@ -65,7 +63,9 @@ class _AppState extends State<App> {
       ],
       child: BlocProvider(
         create: (context) => appBloc,
-        child: AppView(_appRouter),
+        child: AppView(
+          appBloc: appBloc,
+        ),
       ),
     );
   }
