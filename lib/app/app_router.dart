@@ -15,6 +15,7 @@ import 'package:emergency_test/features/user_activities/view/user_activities_pag
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
 import 'package:emergency_test/layout/home_page.dart';
+import 'package:emergency_test/repository/local_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,7 +30,7 @@ class AppRouter {
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
-        path: "/",
+        path: "/login",
         name: LoginPage.route,
         builder: (context, state) => const LoginPage(),
         routes: [
@@ -72,7 +73,7 @@ class AppRouter {
         ],
       ),
       GoRoute(
-        path: "/home",
+        path: "/",
         name: HomePage.route,
         builder: (context, state) => const HomePage(),
         routes: [
@@ -111,15 +112,19 @@ class AppRouter {
         builder: (context, state) => const HistoryPage(),
       ),
     ],
-    // redirect: (context, state) async {
-    //   print(state.matchedLocation);
-    //   print(appBloc.state);
-    //   if (appBloc.state.appAuthStatus == AppAuthStatus.authenticated) {
-    //     return context.namedLocation("/");
-    //   } else {
-    //     return "/login";
-    //   }
-    // },
+    redirect: (context, state) async {
+      final currentUser = LocalRepository.getString("token");
+
+      final isLoggedIn = currentUser != null;
+
+      final loggingIn = state.matchedLocation.startsWith("/login");
+
+      if (!isLoggedIn) return loggingIn ? null : "/login";
+
+      if (loggingIn) return "/";
+
+      return null;
+    },
     // redirect: (context, state) async {
     //   final currentUser = _appBloc.state.appAuthStatus;
 

@@ -1,15 +1,23 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/activate/bloc/activate_bloc.dart';
+import 'package:emergency_test/models/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ActivateView extends StatelessWidget {
-  const ActivateView({super.key});
+  const ActivateView({
+    required this.member,
+    super.key,
+  });
+
+  final Member? member;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+
+    print(context.read<AppBloc>().state.member);
 
     return Scaffold(
       body: BlocConsumer<ActivateBloc, ActivateState>(
@@ -24,8 +32,6 @@ class ActivateView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          final user = context.read<AppBloc>().state.member;
-
           return Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -37,7 +43,7 @@ class ActivateView extends StatelessWidget {
                 ),
                 const SizedBox(height: 24.0),
                 Text(
-                  "Hi, ${user?.fullname ?? ""}",
+                  "Hi, ${member?.fullname ?? ""}",
                   style: theme.textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12.0),
@@ -55,7 +61,7 @@ class ActivateView extends StatelessWidget {
                       "Verifying Email Address",
                       style: theme.textTheme.bodySmall,
                     ),
-                    subtitle: Text(user?.email ?? ""),
+                    subtitle: Text(member?.email ?? ""),
                     trailing: TextButton(
                       onPressed: () {},
                       child: const Text("Change"),

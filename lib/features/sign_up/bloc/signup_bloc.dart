@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/local_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
@@ -104,7 +105,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       emit(state.copyWith(registrationStatus: RegistrationStatus.loading));
 
-      await _authRepository.register(
+      final token = await _authRepository.register(
         email: state.email!,
         username: state.username!,
         password: state.password!,
@@ -121,9 +122,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         confirmDuressPassword: state.confirmDuressPassword ?? "",
         relationship: state.relationship ?? "",
       );
+
+      if (token == null) return;
+
+      LocalRepository.setString("token", token);
       emit(state.copyWith(registrationStatus: RegistrationStatus.success));
     } catch (e) {
-      emit(state.copyWith(registrationStatus: RegistrationStatus.failed));
+      emit(state.copyWith(
+          registrationStatus: RegistrationStatus.failed, error: e.toString()));
       rethrow;
     }
   }

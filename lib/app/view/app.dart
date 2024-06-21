@@ -1,6 +1,7 @@
 import 'package:emergency_test/app/app_router.dart';
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/app/view/app_view.dart';
+import 'package:emergency_test/repository/activity_repository.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
@@ -12,6 +13,7 @@ import 'package:geolocator/geolocator.dart';
 
 class App extends StatefulWidget {
   const App({
+    required this.activityRepository,
     required this.geolocationRepository,
     required this.placesRepository,
     required this.authRepository,
@@ -20,6 +22,7 @@ class App extends StatefulWidget {
     super.key,
   });
 
+  final ActivityRepository activityRepository;
   final GeolocationRepository geolocationRepository;
   final PlaceRepository placesRepository;
   final AuthRepository authRepository;
@@ -43,7 +46,8 @@ class _AppState extends State<App> {
       geolocationRepository: widget.geolocationRepository,
       authRepository: widget.authRepository,
       userRepository: widget.userRepository,
-    );
+    )..add(AppInitRequested());
+    // );
 
     AppLifecycleListener(
       onStateChange: (state) {
@@ -55,6 +59,7 @@ class _AppState extends State<App> {
 
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider.value(value: widget.activityRepository),
         RepositoryProvider.value(value: widget.geolocationRepository),
         RepositoryProvider.value(value: widget.placesRepository),
         RepositoryProvider.value(value: widget.authRepository),

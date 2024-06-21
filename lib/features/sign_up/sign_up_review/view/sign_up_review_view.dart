@@ -22,7 +22,7 @@ class SignUpReviewView extends StatelessWidget {
           }
 
           if (state.registrationStatus == RegistrationStatus.failed) {
-            Fluttertoast.showToast(msg: "Something went wrong");
+            Fluttertoast.showToast(msg: "Something went wrong: ${state.error}");
           }
         },
         builder: (context, state) {

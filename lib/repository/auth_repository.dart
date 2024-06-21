@@ -58,7 +58,7 @@ class AuthRepository {
 
   Future<void> logOut() async {
     try {
-      // await _firebaseAuth.signOut();
+      await LocalRepository.remove("token");
     } catch (e) {
       rethrow;
     }
@@ -66,7 +66,7 @@ class AuthRepository {
 
   // using sos api
 
-  Future<void> register({
+  Future<String?> register({
     required String email,
     required String username,
     required String password,
@@ -116,8 +116,14 @@ class AuthRepository {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(await response.stream.bytesToString())
           as Map<String, dynamic>;
-
       log("Response: $responseData");
+
+
+      if (responseData["result"] == 0) {
+        throw Exception("${responseData["message"]}");
+      }
+
+      return responseData["member_id"];
     } else {
       throw Exception("Something went wrong. ${response.reasonPhrase}");
     }

@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'member.g.dart';
@@ -6,7 +7,7 @@ bool intToBool(int value) => value == 1;
 int boolToInt(bool? value) => value! ? 1 : 0;
 
 @JsonSerializable(explicitToJson: true)
-class Member {
+class Member extends Equatable {
   @JsonKey(name: "country_code")
   final String? countryCode;
   @JsonKey(name: "total_credit")
@@ -27,8 +28,8 @@ class Member {
   final String? fullname;
   @JsonKey(name: "location")
   final String? location;
-  @JsonKey(name: "flag")
-  final String? flag;
+  // @JsonKey(name: "flag")
+  // final String? flag;
   @JsonKey(name: "member_since")
   final String? memberSince;
   @JsonKey(name: "total_response")
@@ -76,7 +77,7 @@ class Member {
   @JsonKey(name: "m_verified", fromJson: intToBool, toJson: boolToInt)
   final bool? mVerified;
 
-  Member({
+  const Member({
     this.countryCode,
     this.totalCredit,
     this.googleid,
@@ -87,7 +88,7 @@ class Member {
     this.profilePic,
     this.fullname,
     this.location,
-    this.flag,
+    // this.flag,
     this.memberSince,
     this.totalResponse,
     this.totalReceived,
@@ -124,7 +125,7 @@ class Member {
     String? profilePic,
     String? fullname,
     String? location,
-    String? flag,
+    // String? flag,
     String? memberSince,
     String? totalResponse,
     String? totalReceived,
@@ -160,7 +161,7 @@ class Member {
         profilePic: profilePic ?? this.profilePic,
         fullname: fullname ?? this.fullname,
         location: location ?? this.location,
-        flag: flag ?? this.flag,
+        // flag: flag ?? this.flag,
         memberSince: memberSince ?? this.memberSince,
         totalResponse: totalResponse ?? this.totalResponse,
         totalReceived: totalReceived ?? this.totalReceived,
@@ -191,4 +192,42 @@ class Member {
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 
   Map<String, dynamic> toJson() => _$MemberToJson(this);
+
+  @override
+  List<Object?> get props => [
+        countryCode,
+        totalCredit,
+        googleid,
+        subscribedYoutube,
+        kycVerified,
+        uname,
+        totalPrimary,
+        profilePic,
+        fullname,
+        location,
+        // flag,
+        memberSince,
+        totalResponse,
+        totalReceived,
+        resultPercentage,
+        mobileNumber,
+        email,
+        memberId,
+        visitorId,
+        birthday,
+        lvl,
+        gender,
+        totalTag,
+        totalTagBy,
+        currentLocationStatus,
+        currentPinnedLocation,
+        totalSentEmergency,
+        totalSentResponsePts,
+        totalSentResponsePts,
+        viberConnected,
+        mobileActive,
+        inviteLink,
+        verified,
+        mVerified,
+      ];
 }

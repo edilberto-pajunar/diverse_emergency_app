@@ -57,23 +57,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final locationPermission = await Geolocator.checkPermission();
       emit(state.copyWith(locationPermission: locationPermission));
 
-      // final userLocation =
-      //     await _geolocationRepository.getLocation(withAddress: true);
-      // emit(state.copyWith(currentLocation: userLocation));
+      final userLocation =
+          await _geolocationRepository.getLocation(withAddress: true);
+      emit(state.copyWith(currentLocation: userLocation));
 
       await emit.forEach(_geolocationRepository.getLocationStream(),
-          onData: (data) => state.copyWith(
-                currentLocation: data,
-                appLocationStatus: AppLocationStatus.success,
-              ));
+          onData: (data) {
+        return state.copyWith(
+          currentLocation: data,
+          appLocationStatus: AppLocationStatus.success,
+        );
+      });
     } catch (e) {
-      e as Exception;
-      switch (e.runtimeType) {
-        case const (LocationServiceDisabledException):
-          emit(state.copyWith(serviceStatus: ServiceStatus.disabled));
-        case const (PermissionDeniedException):
-          emit(state.copyWith(locationPermission: LocationPermission.denied));
-          break;
+      if (e is LocationServiceDisabledException) {
+        emit(state.copyWith(
+          serviceStatus: ServiceStatus.disabled,
+          appLocationStatus: AppLocationStatus.failed,
+        ));
+      }
+
+      if (e is PermissionDeniedException) {
+        emit(state.copyWith(
+          locationPermission: LocationPermission.denied,
+          appLocationStatus: AppLocationStatus.failed,
+        ));
+      } else {
+        emit(state.copyWith(
+          appLocationStatus: AppLocationStatus.failed,
+        ));
       }
     }
   }
@@ -86,6 +97,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     if (token == null) return;
 
+    emit(state.copyWith(appAuthStatus: AppAuthStatus.loading));
+
     final member = await _authRepository.getMemberInfo(token);
 
     emit(state.copyWith(
@@ -93,29 +106,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       appAuthStatus: AppAuthStatus.authenticated,
       member: member,
     ));
-    // final email = LocalRepository.getString("email");
-    // final password = LocalRepository.getString("password");
-
-    // if (email!.isEmpty || password!.isEmpty) return;
-
-    // try {
-    //   final appUser =
-    //       await _authRepository.signInWithEmailAndPassword(email, password);
-
-    //   emit(state.copyWith(
-    //     currentUserInfo: appUser,
-    //     appAuthStatus: AppAuthStatus.authenticated,
-    //   ));
-    // } catch (e) {
-    //   rethrow;
-    // }
   }
 
   void _onSignOutRequested(
     AppSignOutRequested event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(signoutStatus: SignoutStatus.signingOut));
+    emit(state.copyWith(
+      signoutStatus: SignoutStatus.signingOut,
+      appAuthStatus: AppAuthStatus.loading,
+    ));
     try {
       await _authRepository.logOut();
       emit(state.copyWith(

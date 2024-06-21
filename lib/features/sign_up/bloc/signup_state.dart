@@ -20,6 +20,7 @@ final class SignUpState extends Equatable {
   final String? relationship;
   final String? address;
   final RegistrationStatus registrationStatus;
+  final String? error;
 
   const SignUpState({
     this.email,
@@ -39,6 +40,7 @@ final class SignUpState extends Equatable {
     this.relationship,
     this.address,
     this.registrationStatus = RegistrationStatus.idle,
+    this.error = "",
   });
 
   SignUpState copyWith({
@@ -59,6 +61,7 @@ final class SignUpState extends Equatable {
     String? relationship,
     String? address,
     RegistrationStatus? registrationStatus,
+    String? error,
   }) {
     return SignUpState(
       email: email ?? this.email,
@@ -79,6 +82,7 @@ final class SignUpState extends Equatable {
       relationship: relationship ?? this.relationship,
       address: address ?? this.address,
       registrationStatus: registrationStatus ?? this.registrationStatus,
+      error: error ?? this.error,
     );
   }
 
@@ -101,5 +105,6 @@ final class SignUpState extends Equatable {
         relationship,
         address,
         registrationStatus,
+        error,
       ];
 }

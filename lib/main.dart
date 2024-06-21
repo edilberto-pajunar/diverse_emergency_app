@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:emergency_test/app/app_bloc_observer.dart';
 import 'package:emergency_test/app/view/app.dart';
 import 'package:emergency_test/firebase_options.dart';
+import 'package:emergency_test/repository/activity_repository.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
@@ -33,6 +34,7 @@ void runAppIn() {
 
   runApp(
     App(
+      activityRepository: ActivityRepository(),
       authRepository: AuthRepository(firebaseAuth: FirebaseAuth.instance),
       databaseRepository: DatabaseRepository(),
       geolocationRepository: GeolocationRepository(),

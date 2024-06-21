@@ -29,6 +29,7 @@ class UserActivitiesView extends StatelessWidget {
                 ),
                 child: BlocBuilder<AppBloc, AppState>(
                   builder: (context, state) {
+                    print(state.appLocationStatus);
                     if (state.appLocationStatus == AppLocationStatus.loading ||
                         state.appLocationStatus == AppLocationStatus.idle) {
                       return const Center(

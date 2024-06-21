@@ -1,6 +1,6 @@
 part of 'app_bloc.dart';
 
-enum AppAuthStatus { authenticated, unauthenticated }
+enum AppAuthStatus {idle, authenticated, loading, unauthenticated }
 
 enum AppLocationStatus { idle, loading, success, failed }
 
@@ -23,7 +23,7 @@ final class AppState extends Equatable {
     this.appLocationStatus = AppLocationStatus.idle,
     this.currentUserInfo,
     this.signoutStatus,
-    this.appAuthStatus = AppAuthStatus.unauthenticated,
+    this.appAuthStatus = AppAuthStatus.idle,
     this.member,
   });
 
