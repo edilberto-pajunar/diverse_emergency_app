@@ -118,7 +118,6 @@ class AuthRepository {
           as Map<String, dynamic>;
       log("Response: $responseData");
 
-
       if (responseData["result"] == 0) {
         throw Exception("${responseData["message"]}");
       }
@@ -184,8 +183,7 @@ class AuthRepository {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(await response.stream.bytesToString());
-      // log("$responseData");
-      print("Response: $responseData");
+      // log("Response: $responseData");
 
       return Member.fromJson(responseData);
     } else {

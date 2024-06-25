@@ -60,6 +60,13 @@ class AppRouter {
               signUpBloc: (state.extra as Map)["signUpBloc"],
             ),
           ),
+        ],
+      ),
+      GoRoute(
+        path: "/check",
+        name: "check",
+        builder: (context, state) => const HomePage(),
+        routes: [
           GoRoute(
             path: "activate",
             name: ActivatePage.route,
@@ -69,6 +76,11 @@ class AppRouter {
             path: "add_contact",
             name: AddContactPage.route,
             builder: (context, state) => const AddContactPage(),
+          ),
+          GoRoute(
+            path: "invitation",
+            name: InvitationPage.route,
+            builder: (context, state) => const InvitationPage(),
           ),
         ],
       ),
@@ -81,6 +93,11 @@ class AppRouter {
             path: "activity",
             name: UserActivitiesPage.route,
             builder: (context, state) => const UserActivitiesPage(),
+          ),
+          GoRoute(
+            path: "invitation",
+            name: "invitation_root_page_route",
+            builder: (context, state) => const InvitationPage(),
           ),
           GoRoute(
             path: "map",
@@ -99,23 +116,36 @@ class AppRouter {
               ),
             ],
           ),
+
+          // Drawer
+
+          GoRoute(
+            path: "history",
+            name: HistoryPage.route,
+            builder: (context, state) => const HistoryPage(),
+          ),
         ],
-      ),
-      GoRoute(
-        path: "/invitation",
-        name: InvitationPage.route,
-        builder: (context, state) => const InvitationPage(),
-      ),
-      GoRoute(
-        path: "/history",
-        name: HistoryPage.route,
-        builder: (context, state) => const HistoryPage(),
       ),
     ],
     redirect: (context, state) async {
       final currentUser = LocalRepository.getString("token");
-
+      print(state.matchedLocation);
       final isLoggedIn = currentUser != null;
+
+      if (_appBloc.state.member != null) {
+        final isVerified = _appBloc.state.member?.verified;
+        final hasContact = double.parse(_appBloc.state.member!.totalTag!) > 0;
+
+        if (!isVerified!) {
+          return "/check/activate";
+        }
+
+        if (!hasContact) {
+          return "/check/add_contact";
+        }
+
+        return null;
+      }
 
       final loggingIn = state.matchedLocation.startsWith("/login");
 
@@ -140,23 +170,23 @@ class AppRouter {
 
     //   return null;
     // },
-    // refreshListenable: _GoRouterRefreshStream(appBloc.stream),
+    refreshListenable: _GoRouterRefreshStream(_appBloc.stream),
   );
 }
 
-// class _GoRouterRefreshStream extends ChangeNotifier {
-//   late final StreamSubscription<dynamic> _subscription;
+class _GoRouterRefreshStream extends ChangeNotifier {
+  late final StreamSubscription<dynamic> _subscription;
 
-//   _GoRouterRefreshStream(Stream<dynamic> stream) {
-//     notifyListeners();
-//     _subscription = stream.asBroadcastStream().listen(
-//           (_) => notifyListeners(),
-//         );
-//   }
+  _GoRouterRefreshStream(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+          (_) => notifyListeners(),
+        );
+  }
 
-//   @override
-//   void dispose() {
-//     _subscription.cancel();
-//     super.dispose();
-//   }
-// }
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}

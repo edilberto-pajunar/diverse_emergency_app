@@ -1,4 +1,5 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/history/view/history_page.dart';
 import 'package:emergency_test/features/login/view/login_page.dart';
 import 'package:emergency_test/models/member.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class UserInfoDrawer extends StatelessWidget {
                         Icons.arrow_forward_ios_sharp,
                       ),
                       leading: const Icon(Icons.history),
-                      onTap: () {},
+                      onTap: () => context.pushNamed(HistoryPage.route),
                     ),
                     const Divider(),
                     ListTile(

@@ -1,6 +1,8 @@
-import 'package:emergency_test/features/activate/view/activate_page.dart';
+
+import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/sign_up/bloc/signup_bloc.dart';
 import 'package:emergency_test/features/sign_up/widget/layout_body.dart';
+import 'package:emergency_test/layout/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +20,9 @@ class SignUpReviewView extends StatelessWidget {
       body: BlocConsumer<SignUpBloc, SignUpState>(
         listener: (context, state) {
           if (state.registrationStatus == RegistrationStatus.success) {
-            context.pushNamed(ActivatePage.route);
+            context
+              ..read<AppBloc>().add(const AppInitAuthRequested())
+              ..pushNamed(HomePage.route);
           }
 
           if (state.registrationStatus == RegistrationStatus.failed) {
@@ -33,7 +37,7 @@ class SignUpReviewView extends StatelessWidget {
           }
 
           final name =
-              "${state.firstName} ${state.middleName} ${state.lastName}";
+              "${state.firstName} ${state.middleName ?? ""} ${state.lastName}";
 
           return LayoutBody(
             children: [

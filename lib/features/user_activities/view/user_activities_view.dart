@@ -39,10 +39,10 @@ class UserActivitiesView extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Current Location: ${state.currentLocation?.address}",
-                          style: theme.textTheme.bodyMedium!.copyWith(),
-                        ),
+                        // Text(
+                        //   "Current Location: ${state.currentLocation?.address}",
+                        //   style: theme.textTheme.bodyMedium!.copyWith(),
+                        // ),
                         const SizedBox(height: 12.0),
                         Text(
                           "Tap an icon in case of EMERGENCY",
@@ -51,23 +51,23 @@ class UserActivitiesView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12.0),
-                        Container(
-                          color: Colors.white,
-                          child: ListTile(
-                            title: Text(
-                              "Unresolved Request",
-                              style: theme.textTheme.bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              "You have unresolved request listed, tap here to resolve your request",
-                              style: theme.textTheme.bodySmall,
-                            ),
-                            leading: const Icon(Icons.account_tree_rounded),
-                            visualDensity: VisualDensity.compact,
-                          ),
-                        ),
+                        // Container(
+                        //   color: Colors.white,
+                        //   child: ListTile(
+                        //     title: Text(
+                        //       "Unresolved Request",
+                        //       style: theme.textTheme.bodyMedium!.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     ),
+                        //     subtitle: Text(
+                        //       "You have unresolved request listed, tap here to resolve your request",
+                        //       style: theme.textTheme.bodySmall,
+                        //     ),
+                        //     leading: const Icon(Icons.account_tree_rounded),
+                        //     visualDensity: VisualDensity.compact,
+                        //   ),
+                        // ),
                         const SizedBox(height: 12.0),
                         Align(
                           alignment: Alignment.bottomRight,

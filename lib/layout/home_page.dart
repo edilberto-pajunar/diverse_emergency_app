@@ -1,6 +1,4 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
-import 'package:emergency_test/features/activate/view/activate_page.dart';
-import 'package:emergency_test/features/invitation/view/invitation_page.dart';
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
@@ -55,16 +53,6 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             ),
           );
-        }
-
-        final member = state.member!;
-
-        if (!member.verified!) {
-          return const ActivatePage();
-        }
-
-        if (double.parse(member.totalTag!) <= 0) {
-          return const InvitationPage();
         }
 
         return Scaffold(

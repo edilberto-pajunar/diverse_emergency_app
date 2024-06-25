@@ -93,10 +93,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitAuthRequested event,
     Emitter<AppState> emit,
   ) async {
+
     final token = LocalRepository.getString("token");
 
     if (token == null) return;
-
+    
     emit(state.copyWith(appAuthStatus: AppAuthStatus.loading));
 
     final member = await _authRepository.getMemberInfo(token);

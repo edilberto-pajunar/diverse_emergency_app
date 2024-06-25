@@ -1,6 +1,8 @@
+import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/user_map/widgets/user_map_details.dart';
 import 'package:emergency_test/features/user_map/widgets/user_map_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class UserMapView extends StatefulWidget {
@@ -17,6 +19,7 @@ class _UserMapViewState extends State<UserMapView> {
 
   @override
   Widget build(BuildContext context) {
+    print(context.read<AppBloc>().state.member?.fullname);
     final Size size = MediaQuery.of(context).size;
     final panelHeightClosed = size.height * 0.1;
     final panelHeightOpen = size.height * 0.5;
