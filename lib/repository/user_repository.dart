@@ -1,34 +1,47 @@
-import 'package:emergency_test/models/app_user.dart';
-import 'package:emergency_test/repository/database_repository.dart';
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:emergency_test/models/app_location.dart';
+import 'package:emergency_test/utils/api.dart';
+import 'package:http/http.dart' as http;
 
 class UserRepository {
-  final DatabaseRepository databaseRepository;
+  Future<String> sendEmergency(
+    String token,
+    AppLocation location,
+  ) async {
+    final uri = Uri.https(ApiClass.baseUrl, ApiClass.path);
 
-  UserRepository({
-    required this.databaseRepository,
-  });
+    final params = {
+      "submit_finder_lat_lang": "",
+      "member_id": token,
+      "type_request": "explore",
+      "latitude": "${location.location.$1}",
+      "longitude": "${location.location.$2}",
+    };
 
-  // Future<AppUserInfo> getUserInfo(AppUser user) async {
-  //   final userPath = "users/${user.id}";
+    final request = http.MultipartRequest("POST", uri)..fields.addAll(params);
 
-  //   AppUserInfo? userInfo = await databaseRepository.getData(
-  //     path: userPath,
-  //     builder: (data, _) => AppUserInfo.fromJson(data),
-  //   );
+    log("Calling: $uri");
 
-  //   userInfo ??= await databaseRepository.getData(
-  //     path: userPath,
-  //     builder: (data, _) => AppUserInfo.fromJson(data),
-  //   );
-  //   return userInfo!;
-  // }
+    final response = await request.send();
 
-  // Stream<AppUserInfo?> userInfoStream(String userId) {
-  //   final userPath = "users/$userId";
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(await response.stream.bytesToString());
+      // log("$responseData");
+      log("Response: $responseData");
 
-  //   return databaseRepository.documentStream(
-  //     path: userPath,
-  //     builder: (data, _) => AppUserInfo.fromJson(data),
-  //   );
-  // }
+      if (responseData["result"] == 0) {
+        throw "Something went wrong. ${responseData["message"]}";
+      }
+
+      if (responseData["result"] == 1) {
+        return responseData["message"];
+      } else {
+        throw Exception("No history was found");
+      }
+    } else {
+      throw Exception("Something went wrong. ${response.reasonPhrase}");
+    }
+  }
 }

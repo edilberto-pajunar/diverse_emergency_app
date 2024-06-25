@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/app_user.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
-import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/local_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,7 +12,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc({
     required AuthRepository authRepository,
-    required DatabaseRepository databaseRepository,
   })  : _authRepository = authRepository,
         super(const LoginState()) {
     on<LoginSignInFailed>(_onLoginSignInFailed);

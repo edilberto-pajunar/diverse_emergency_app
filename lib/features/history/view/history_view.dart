@@ -5,21 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HistoryView extends StatelessWidget {
   const HistoryView({super.key});
 
-  // static final examples = [
-  //   {
-  //     "name": "Choi pajunar",
-  //     "duration": "05/04/2001 00:00:00",
-  //     "place": "Rodriguez Rizal, Philippines",
-  //     "resolved": false,
-  //   },
-  //   {
-  //     "name": "Test #2",
-  //     "duration": "05/04/2001 00:00:00",
-  //     "place": "Makati, Philippines",
-  //     "resolved": true,
-  //   }
-  // ];
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);

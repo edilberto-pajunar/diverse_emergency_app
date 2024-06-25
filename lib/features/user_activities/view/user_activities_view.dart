@@ -1,5 +1,6 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
+import 'package:emergency_test/features/user_activities/widget/explore_activity.dart';
 import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,6 @@ class UserActivitiesView extends StatelessWidget {
                 ),
                 child: BlocBuilder<AppBloc, AppState>(
                   builder: (context, state) {
-                    print(state.appLocationStatus);
                     if (state.appLocationStatus == AppLocationStatus.loading ||
                         state.appLocationStatus == AppLocationStatus.idle) {
                       return const Center(
@@ -69,13 +69,7 @@ class UserActivitiesView extends StatelessWidget {
                         //   ),
                         // ),
                         const SizedBox(height: 12.0),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Text("Explore"),
-                          ),
-                        ),
+                        const ExploreActivity(),
                       ],
                     );
                   },

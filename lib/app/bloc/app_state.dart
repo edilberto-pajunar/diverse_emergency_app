@@ -1,6 +1,6 @@
 part of 'app_bloc.dart';
 
-enum AppAuthStatus {idle, authenticated, loading, unauthenticated }
+enum AppAuthStatus { idle, authenticated, loading, unauthenticated }
 
 enum AppLocationStatus { idle, loading, success, failed }
 
@@ -15,6 +15,7 @@ final class AppState extends Equatable {
   final SignoutStatus? signoutStatus;
   final AppAuthStatus appAuthStatus;
   final Member? member;
+  final int tabIndex;
 
   const AppState({
     this.serviceStatus,
@@ -25,6 +26,7 @@ final class AppState extends Equatable {
     this.signoutStatus,
     this.appAuthStatus = AppAuthStatus.idle,
     this.member,
+    this.tabIndex = 1,
   });
 
   AppState copyWith({
@@ -36,6 +38,7 @@ final class AppState extends Equatable {
     SignoutStatus? signoutStatus,
     AppAuthStatus? appAuthStatus,
     Member? member,
+    int? tabIndex,
   }) {
     return AppState(
       serviceStatus: serviceStatus ?? this.serviceStatus,
@@ -46,6 +49,7 @@ final class AppState extends Equatable {
       signoutStatus: signoutStatus ?? this.signoutStatus,
       appAuthStatus: appAuthStatus ?? this.appAuthStatus,
       member: member ?? this.member,
+      tabIndex: tabIndex ?? this.tabIndex,
     );
   }
 
@@ -59,5 +63,6 @@ final class AppState extends Equatable {
         signoutStatus,
         appAuthStatus,
         member,
+        tabIndex,
       ];
 }

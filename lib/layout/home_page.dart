@@ -17,8 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int tabIndex = 1;
-
   final List<TabWidgetRecord> homeTabWidgetRecords = [
     (
       tabBarItem: const NavigationDestination(
@@ -55,32 +53,39 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        return Scaffold(
-          appBar: AppBar(
-            actions: const [],
-          ),
-          drawer: const UserInfoDrawer(),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              context.read<AppBloc>().add(AppInitRequested());
+        return PopScope(
+          canPop: false,
+          child: BlocBuilder<AppBloc, AppState>(
+            builder: (context, state) {
+              return Scaffold(
+                appBar: AppBar(
+                  actions: const [],
+                ),
+                drawer: const UserInfoDrawer(),
+                body: RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<AppBloc>().add(AppInitRequested());
+                  },
+                  child: IndexedStack(
+                    index: state.tabIndex,
+                    children: homeTabWidgetRecords
+                        .map((tabRecord) => tabRecord.tabView)
+                        .toList(),
+                  ),
+                ),
+                bottomNavigationBar: NavigationBar(
+                  selectedIndex: state.tabIndex,
+                  onDestinationSelected: (selectedIndex) {
+                    context.read<AppBloc>().add(AppHomeTabTapped(
+                          tab: selectedIndex,
+                        ));
+                  },
+                  destinations: homeTabWidgetRecords
+                      .map((tabRecord) => tabRecord.tabBarItem)
+                      .toList(),
+                ),
+              );
             },
-            child: IndexedStack(
-              index: tabIndex,
-              children: homeTabWidgetRecords
-                  .map((tabRecord) => tabRecord.tabView)
-                  .toList(),
-            ),
-          ),
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: tabIndex,
-            onDestinationSelected: (selectedIndex) {
-              setState(() {
-                tabIndex = selectedIndex;
-              });
-            },
-            destinations: homeTabWidgetRecords
-                .map((tabRecord) => tabRecord.tabBarItem)
-                .toList(),
           ),
         );
       },

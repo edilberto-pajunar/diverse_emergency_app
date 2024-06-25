@@ -30,6 +30,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppInitAuthRequested>(_onAppInitAuthRequested);
     on<AppSignOutRequested>(_onSignOutRequested);
     on<AppSignOutFailed>(_onSignOutFailed);
+    on<AppHomeTabTapped>(_onHomeTabTapped);
   }
 
   void _onInitRequested(
@@ -93,11 +94,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitAuthRequested event,
     Emitter<AppState> emit,
   ) async {
-
     final token = LocalRepository.getString("token");
 
     if (token == null) return;
-    
+
     emit(state.copyWith(appAuthStatus: AppAuthStatus.loading));
 
     final member = await _authRepository.getMemberInfo(token);
@@ -146,4 +146,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   //     appAuthStatus: AppAuthStatus.authenticated,
   //   ));
   // }
+
+  void _onHomeTabTapped(
+    AppHomeTabTapped event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(
+      tabIndex: event.tab,
+    ));
+  }
 }

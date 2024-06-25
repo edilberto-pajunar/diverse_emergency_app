@@ -14,3 +14,11 @@ final class UserContactTypeTapped extends UserActivitiesEvent {
     required this.contactType,
   });
 }
+
+final class UserExploreTapped extends UserActivitiesEvent {
+  final AppLocation location;
+
+  const UserExploreTapped({
+    required this.location,
+  });
+}

@@ -25,3 +25,11 @@ final class AppSignOutFailed extends AppEvent {
   final Exception signOutException;
   const AppSignOutFailed(this.signOutException);
 }
+
+final class AppHomeTabTapped extends AppEvent {
+  final int tab;
+
+  const AppHomeTabTapped({
+    required this.tab,
+  });
+}

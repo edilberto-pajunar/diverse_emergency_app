@@ -1,9 +1,7 @@
-import 'package:emergency_test/app/app_router.dart';
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/app/view/app_view.dart';
 import 'package:emergency_test/repository/activity_repository.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
-import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
 import 'package:emergency_test/repository/history_repository.dart';
 import 'package:emergency_test/repository/place_repository.dart';
@@ -19,7 +17,6 @@ class App extends StatefulWidget {
     required this.placesRepository,
     required this.authRepository,
     required this.userRepository,
-    required this.databaseRepository,
     required this.historyRepository,
     super.key,
   });
@@ -29,7 +26,6 @@ class App extends StatefulWidget {
   final PlaceRepository placesRepository;
   final AuthRepository authRepository;
   final UserRepository userRepository;
-  final DatabaseRepository databaseRepository;
   final HistoryRepository historyRepository;
 
   @override
@@ -67,7 +63,6 @@ class _AppState extends State<App> {
         RepositoryProvider.value(value: widget.placesRepository),
         RepositoryProvider.value(value: widget.authRepository),
         RepositoryProvider.value(value: widget.userRepository),
-        RepositoryProvider.value(value: widget.databaseRepository),
         RepositoryProvider.value(value: widget.historyRepository)
       ],
       child: BlocProvider(
