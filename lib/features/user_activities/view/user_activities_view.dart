@@ -1,7 +1,7 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
 import 'package:emergency_test/features/user_activities/widget/explore_activity.dart';
-import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
+import 'package:emergency_test/features/user_activities/widget/contact_activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -179,7 +179,7 @@ class UserActivitiesView extends StatelessWidget {
                   ),
                 ],
               ),
-              const UserContact(),
+              const ContactActivity(),
             ],
           ),
         ),

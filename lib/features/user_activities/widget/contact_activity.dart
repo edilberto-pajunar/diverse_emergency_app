@@ -2,8 +2,8 @@ import 'package:emergency_test/features/user_activities/bloc/user_activities_blo
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserContact extends StatelessWidget {
-  const UserContact({
+class ContactActivity extends StatelessWidget {
+  const ContactActivity({
     super.key,
   });
 
@@ -16,6 +16,11 @@ class UserContact extends StatelessWidget {
 
     return BlocBuilder<UserActivitiesBloc, UserActivitiesState>(
       builder: (context, state) {
+        if (state.contactStatus == ContactStatus.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,19 +81,19 @@ class UserContact extends StatelessWidget {
                 final contactPerson = state.contactPersons[index];
 
                 return ListTile(
-                  title: Text(contactPerson.username),
+                  title: Text(contactPerson.fullname ?? ""),
                   leading: Container(
                     height: 50,
-                    width: 50,
+                    width: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        width: 3.0,
+                        width: 1.0,
                       ),
                     ),
                     child: ClipOval(
                       child: Image.network(
-                        image,
+                        contactPerson.proPic ?? image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -97,7 +102,7 @@ class UserContact extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.verified,
-                        color: contactPerson.emailVerified
+                        color: contactPerson.emailVerified!
                             ? Colors.green
                             : Colors.black,
                         size: 12,
@@ -109,7 +114,7 @@ class UserContact extends StatelessWidget {
                       const SizedBox(width: 4.0),
                       Icon(
                         Icons.phone,
-                        color: contactPerson.phoneVerified
+                        color: contactPerson.mobileVerified!
                             ? Colors.green
                             : Colors.black,
                         size: 12,
@@ -139,13 +144,27 @@ class UserContact extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return SizedBox(
-          height: 400.0,
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text("Close"),
-            ),
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CheckboxListTile.adaptive(
+                value: false,
+                onChanged: (val) {},
+                title: const Text("To Receive SMS"),
+              ),
+              const Divider(),
+              TextButton(
+                onPressed: () {},
+                child: const Text("Unset as Primary"),
+              ),
+              const Divider(),
+              TextButton(
+                onPressed: () {},
+                child: const Text("Set tag relationship"),
+              ),
+            ],
           ),
         );
       },

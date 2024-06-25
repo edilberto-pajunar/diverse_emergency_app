@@ -1,4 +1,3 @@
-import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/user_activities/bloc/user_activities_bloc.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_view.dart';
 import 'package:emergency_test/repository/user_repository.dart';
@@ -16,7 +15,7 @@ class UserActivitiesPage extends StatelessWidget {
         BlocProvider(
           create: (context) => UserActivitiesBloc(
             userRepository: context.read<UserRepository>(),
-          ),
+          )..add(UserInitRequested()),
         ),
       ],
       child: const UserActivitiesView(),

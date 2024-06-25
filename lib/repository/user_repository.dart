@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:emergency_test/models/app_location.dart';
+import 'package:emergency_test/models/contact_person.dart';
 import 'package:emergency_test/utils/api.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,6 @@ class UserRepository {
     final request = http.MultipartRequest("POST", uri)..fields.addAll(params);
 
     log("Calling: $uri");
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
@@ -39,6 +39,55 @@ class UserRepository {
         return responseData["message"];
       } else {
         throw Exception("No history was found");
+      }
+    } else {
+      throw Exception("Something went wrong. ${response.reasonPhrase}");
+    }
+  }
+
+  Future<List<ContactPerson>> getContactPersons(
+    String token,
+    bool primary,
+  ) async {
+    final uri = Uri.https(ApiClass.baseUrl, ApiClass.path);
+
+    final primaryParams = {
+      "submit_list_member_primary_approved_tag": "",
+      "member_id": token,
+    };
+
+    final tagParams = {
+      "submit_list_member_sender_approved_tag": "",
+      "member_id": token,
+    };
+
+    final request = http.MultipartRequest("POST", uri)
+      ..fields.addAll(primary ? primaryParams : tagParams);
+
+    log("Calling: $uri");
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(await response.stream.bytesToString());
+      // log("$responseData");
+      log("Response: $responseData");
+
+      if (responseData["result"] == 0) {
+        throw "Something went wrong. ${responseData["message"]}";
+      }
+
+      if (responseData["result"] == 1) {
+        final data = primary
+            ? responseData["member_list_primary"]
+            : responseData["memberR_list"];
+        final contacts = (data as List)
+            .map((contact) => ContactPerson.fromJson(contact))
+            .toList();
+
+        print(responseData["member_list_primary"]);
+        return contacts;
+      } else {
+        throw Exception("No contact was found");
       }
     } else {
       throw Exception("Something went wrong. ${response.reasonPhrase}");

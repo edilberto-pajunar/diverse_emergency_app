@@ -7,6 +7,12 @@ class UserActivitiesEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class UserInitRequested extends UserActivitiesEvent {}
+
+final class UserInitContactsRequested extends UserActivitiesEvent {
+  
+}
+
 final class UserContactTypeTapped extends UserActivitiesEvent {
   final ContactType contactType;
 

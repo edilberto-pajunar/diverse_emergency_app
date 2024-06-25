@@ -1,6 +1,6 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/personal_info.dart/view/personal_info_page.dart';
-import 'package:emergency_test/features/user_activities/widget/user_contact.dart';
+import 'package:emergency_test/features/user_activities/widget/contact_activity.dart';
 import 'package:emergency_test/features/user_profile/widgets/setting_tile.dart';
 import 'package:emergency_test/models/app_user.dart';
 import 'package:emergency_test/utils/version.dart';
@@ -39,7 +39,7 @@ class UserProfileView extends StatelessWidget {
                     width: 50,
                     child: ClipOval(
                       child: Image.network(
-                        UserContact.image,
+                        ContactActivity.image,
                         fit: BoxFit.cover,
                       ),
                     ),
