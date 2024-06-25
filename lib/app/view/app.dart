@@ -5,6 +5,7 @@ import 'package:emergency_test/repository/activity_repository.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/history_repository.dart';
 import 'package:emergency_test/repository/place_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class App extends StatefulWidget {
     required this.authRepository,
     required this.userRepository,
     required this.databaseRepository,
+    required this.historyRepository,
     super.key,
   });
 
@@ -28,6 +30,7 @@ class App extends StatefulWidget {
   final AuthRepository authRepository;
   final UserRepository userRepository;
   final DatabaseRepository databaseRepository;
+  final HistoryRepository historyRepository;
 
   @override
   State<App> createState() => _AppState();
@@ -65,6 +68,7 @@ class _AppState extends State<App> {
         RepositoryProvider.value(value: widget.authRepository),
         RepositoryProvider.value(value: widget.userRepository),
         RepositoryProvider.value(value: widget.databaseRepository),
+        RepositoryProvider.value(value: widget.historyRepository)
       ],
       child: BlocProvider(
         create: (context) => appBloc,

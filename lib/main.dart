@@ -6,6 +6,7 @@ import 'package:emergency_test/repository/activity_repository.dart';
 import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/repository/database_repository.dart';
 import 'package:emergency_test/repository/geolocation_repository.dart';
+import 'package:emergency_test/repository/history_repository.dart';
 import 'package:emergency_test/repository/local_repository.dart';
 import 'package:emergency_test/repository/place_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
@@ -37,6 +38,7 @@ void runAppIn() {
       activityRepository: ActivityRepository(),
       authRepository: AuthRepository(firebaseAuth: FirebaseAuth.instance),
       databaseRepository: DatabaseRepository(),
+      historyRepository: HistoryRepository(),
       geolocationRepository: GeolocationRepository(),
       placesRepository: PlaceRepository(),
       userRepository: UserRepository(databaseRepository: DatabaseRepository()),
