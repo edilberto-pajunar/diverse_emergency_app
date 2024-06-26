@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/models/contact_person.dart';
+import 'package:emergency_test/models/unresolved_request.dart';
 import 'package:emergency_test/repository/local_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -15,21 +16,25 @@ class UserActivitiesBloc
   UserActivitiesBloc({required UserRepository userRepository})
       : _userRepository = userRepository,
         super(const UserActivitiesState()) {
-    on<UserInitRequested>(_onInitRequested);
-    on<UserInitContactsRequested>(_onInitContactsRequested);
-    on<UserContactTypeTapped>(_onContactTypeTapped);
-    on<UserExploreTapped>(_onExploreTapped);
+    on<UserActivitiesInitRequested>(_onInitRequested);
+    on<UserActivitiesInitContactsRequested>(_onInitContactsRequested);
+    on<UserActivitiesContactTypeTapped>(_onContactTypeTapped);
+    on<UserActivitiesExploreTapped>(_onExploreTapped);
+    on<UserActivitiesUnresolvedExploreRequested>(_onUnresolvedExploreRequested);
+    on<UserActivitiesFailedTriggered>(_onFailedTriggered);
+    on<UserActivitiesResolveRequested>(_onResolveRequested);
   }
 
   void _onInitRequested(
-    UserInitRequested event,
+    UserActivitiesInitRequested event,
     Emitter<UserActivitiesState> emit,
   ) {
-    add(UserInitContactsRequested());
+    add(UserActivitiesInitContactsRequested());
+    add(UserActivitiesUnresolvedExploreRequested());
   }
 
   void _onInitContactsRequested(
-    UserInitContactsRequested event,
+    UserActivitiesInitContactsRequested event,
     Emitter<UserActivitiesState> emit,
   ) async {
     final token = LocalRepository.getString("token");
@@ -49,7 +54,7 @@ class UserActivitiesBloc
   }
 
   void _onContactTypeTapped(
-    UserContactTypeTapped event,
+    UserActivitiesContactTypeTapped event,
     Emitter<UserActivitiesState> emit,
   ) async {
     final token = LocalRepository.getString("token");
@@ -72,7 +77,7 @@ class UserActivitiesBloc
   }
 
   void _onExploreTapped(
-    UserExploreTapped event,
+    UserActivitiesExploreTapped event,
     Emitter<UserActivitiesState> emit,
   ) async {
     final token = LocalRepository.getString("token");
@@ -84,6 +89,7 @@ class UserActivitiesBloc
         token,
         event.location,
       );
+      add(UserActivitiesUnresolvedExploreRequested());
       emit(state.copyWith(
         emergencyStatus: EmergencyStatus.success,
         emergencyResponse: response,
@@ -91,5 +97,57 @@ class UserActivitiesBloc
     } catch (e) {
       emit(state.copyWith(emergencyStatus: EmergencyStatus.failed));
     }
+  }
+
+  void _onUnresolvedExploreRequested(
+    UserActivitiesUnresolvedExploreRequested event,
+    Emitter<UserActivitiesState> emit,
+  ) async {
+    final token = LocalRepository.getString("token");
+    if (token == null) return;
+
+    try {
+      final unresolvedRequest =
+          await _userRepository.getUnresolvedRequest(token);
+      emit(state.copyWith(
+        unresolvedRequest: unresolvedRequest,
+      ));
+    } catch (e) {
+      add(UserActivitiesFailedTriggered(error: e.toString()));
+    }
+  }
+
+  void _onResolveRequested(
+    UserActivitiesResolveRequested event,
+    Emitter<UserActivitiesState> emit,
+  ) async {
+    final token = LocalRepository.getString("token");
+    if (token == null || event.locationId!.isEmpty) return;
+
+    try {
+      emit(state.copyWith(
+        resolveStatus: ResolveStatus.loading,
+      ));
+
+      final response = await _userRepository.resolveRequest(
+        token,
+        event.locationId!,
+      );
+      add(UserActivitiesUnresolvedExploreRequested());
+
+      emit(state.copyWith(
+        resolveStatus: ResolveStatus.success,
+        resolveResponse: response,
+      ));
+    } catch (e) {
+      add(UserActivitiesFailedTriggered(error: e.toString()));
+    }
+  }
+
+  void _onFailedTriggered(
+    UserActivitiesFailedTriggered event,
+    Emitter<UserActivitiesState> emit,
+  ) async {
+    emit(state.copyWith(error: event.error));
   }
 }

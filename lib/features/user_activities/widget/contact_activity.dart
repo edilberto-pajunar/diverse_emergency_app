@@ -35,7 +35,7 @@ class ContactActivity extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () => context.read<UserActivitiesBloc>().add(
-                      const UserContactTypeTapped(
+                      const UserActivitiesContactTypeTapped(
                           contactType: ContactType.primary)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: state.contactType == ContactType.primary
@@ -55,7 +55,7 @@ class ContactActivity extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => context
                       .read<UserActivitiesBloc>()
-                      .add(const UserContactTypeTapped(
+                      .add(const UserActivitiesContactTypeTapped(
                         contactType: ContactType.taglist,
                       )),
                   style: ElevatedButton.styleFrom(

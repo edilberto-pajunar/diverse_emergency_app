@@ -3,6 +3,7 @@ import 'package:emergency_test/features/personal_info.dart/view/personal_info_pa
 import 'package:emergency_test/features/user_activities/widget/contact_activity.dart';
 import 'package:emergency_test/features/user_profile/widgets/setting_tile.dart';
 import 'package:emergency_test/models/app_user.dart';
+import 'package:emergency_test/models/member.dart';
 import 'package:emergency_test/utils/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,90 +31,98 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12.0),
-            BlocSelector<AppBloc, AppState, AppUser?>(
-              selector: (state) => state.currentUserInfo,
-              builder: (context, userInfo) {
-                return ListTile(
-                  leading: SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: ClipOval(
-                      child: Image.network(
-                        ContactActivity.image,
-                        fit: BoxFit.cover,
+            BlocSelector<AppBloc, AppState, Member?>(
+              selector: (state) => state.member,
+              builder: (context, member) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      leading: SizedBox(
+                        height: 50,
+                        width: 40,
+                        child: ClipOval(
+                          child: Image.network(
+                            member?.profilePic ?? ContactActivity.image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        "Name: ${member?.fullname}",
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text("Email: ${member?.email}"),
+                    ),
+                    Text(
+                      "Information",
+                      style: theme.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  title: const Text(
-                    "Guest",
-                  ),
-                  subtitle: const Text("pajunar0@gmail.com"),
+                    const SizedBox(height: 12.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${member?.totalCredit}",
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              "Credit",
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${member?.totalTag}",
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text("Tag"),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${member?.totalTagBy}",
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text("Tag by"),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${member?.lvl}",
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text("Level"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 );
               },
             ),
             const Divider(),
-            Text(
-              "Information",
-              style: theme.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "0",
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text(
-                      "Credit",
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "0",
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text("Tag"),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "0",
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text("Tag by"),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "1",
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text("Level"),
-                  ],
-                ),
-              ],
-            ),
             const SizedBox(height: 12.0),
             Text(
               "Settings",

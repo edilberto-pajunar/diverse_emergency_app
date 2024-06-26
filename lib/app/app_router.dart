@@ -6,7 +6,9 @@ import 'package:emergency_test/features/add_contact/view/add_contact_page.dart';
 import 'package:emergency_test/features/login/view/login_page.dart';
 import 'package:emergency_test/features/history/view/history_page.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
+import 'package:emergency_test/features/members/view/members_page.dart';
 import 'package:emergency_test/features/personal_info.dart/view/personal_info_page.dart';
+import 'package:emergency_test/features/request/view/request_page.dart';
 import 'package:emergency_test/features/sign_up/sign_up_home_address/view/sign_up_home_address_page.dart';
 import 'package:emergency_test/features/sign_up/sign_up_review/view/sign_up_review_page.dart';
 import 'package:emergency_test/features/sign_up/sign_up_security/view/sign_up_security_page.dart';
@@ -93,6 +95,21 @@ class AppRouter {
             path: "activity",
             name: UserActivitiesPage.route,
             builder: (context, state) => const UserActivitiesPage(),
+            routes: [
+              GoRoute(
+                path: "members",
+                name: MembersPage.route,
+                builder: (context, state) => const MembersPage(),
+              ),
+              GoRoute(
+                path: "requests",
+                name: RequestPage.route,
+                builder: (context, state) => RequestPage(
+                  userActivitiesBloc:
+                      (state.extra as Map)["userActivitiesBloc"],
+                ),
+              ),
+            ],
           ),
           GoRoute(
             path: "invitation",

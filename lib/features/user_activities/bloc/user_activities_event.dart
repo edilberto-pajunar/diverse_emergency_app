@@ -7,24 +7,41 @@ class UserActivitiesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class UserInitRequested extends UserActivitiesEvent {}
+final class UserActivitiesInitRequested extends UserActivitiesEvent {}
 
-final class UserInitContactsRequested extends UserActivitiesEvent {
-  
-}
+final class UserActivitiesInitContactsRequested extends UserActivitiesEvent {}
 
-final class UserContactTypeTapped extends UserActivitiesEvent {
+final class UserActivitiesContactTypeTapped extends UserActivitiesEvent {
   final ContactType contactType;
 
-  const UserContactTypeTapped({
+  const UserActivitiesContactTypeTapped({
     required this.contactType,
   });
 }
 
-final class UserExploreTapped extends UserActivitiesEvent {
+final class UserActivitiesExploreTapped extends UserActivitiesEvent {
   final AppLocation location;
 
-  const UserExploreTapped({
+  const UserActivitiesExploreTapped({
     required this.location,
+  });
+}
+
+final class UserActivitiesUnresolvedExploreRequested
+    extends UserActivitiesEvent {}
+
+final class UserActivitiesResolveRequested extends UserActivitiesEvent {
+  final String? locationId;
+
+  const UserActivitiesResolveRequested({
+    this.locationId,
+  });
+}
+
+final class UserActivitiesFailedTriggered extends UserActivitiesEvent {
+  final String error;
+
+  const UserActivitiesFailedTriggered({
+    required this.error,
   });
 }

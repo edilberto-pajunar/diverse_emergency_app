@@ -15,7 +15,7 @@ class UserActivitiesPage extends StatelessWidget {
         BlocProvider(
           create: (context) => UserActivitiesBloc(
             userRepository: context.read<UserRepository>(),
-          )..add(UserInitRequested()),
+          )..add(UserActivitiesInitRequested()),
         ),
       ],
       child: const UserActivitiesView(),

@@ -136,17 +136,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(signoutStatus: SignoutStatus.signOutFailure));
   }
 
-  // void _onAuthenticatedTriggered(
-  //   AppAuthenticatedTriggered event,
-  //   Emitter<AppState> emit,
-  // ) async {
-  //   LocalRepository.setString("auth", AppAuthStatus.authenticated.toString());
-
-  //   emit(state.copyWith(
-  //     appAuthStatus: AppAuthStatus.authenticated,
-  //   ));
-  // }
-
   void _onHomeTabTapped(
     AppHomeTabTapped event,
     Emitter<AppState> emit,

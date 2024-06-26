@@ -1,5 +1,7 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
+import 'package:emergency_test/features/request/view/request_page.dart';
 import 'package:emergency_test/features/user_activities/bloc/user_activities_bloc.dart';
+import 'package:emergency_test/models/unresolved_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,58 +14,93 @@ class ExploreActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserActivitiesBloc, UserActivitiesState>(
-      listener: (context, state) {
-        if (state.emergencyStatus == EmergencyStatus.loading) {
-          context.pop();
-          Fluttertoast.showToast(msg: "Sending an emergency");
-        }
+    final ThemeData theme = Theme.of(context);
 
-        if (state.emergencyStatus == EmergencyStatus.success) {
-          Fluttertoast.showToast(msg: state.emergencyResponse);
-          context.read<AppBloc>().add(const AppHomeTabTapped(tab: 1));
-        }
-      },
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: ElevatedButton(
-          // onPressed: () => context
-          //     .read<AppBloc>()
-          //     .add(const AppHomeTabTapped(tab: 1)),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (_) {
-                return AlertDialog.adaptive(
-                  title: const Text("Sending an emergency"),
-                  content: const Text(
-                    "Please confirm you want to send an emergency.",
-                    textAlign: TextAlign.center,
+    return Column(
+      children: [
+        BlocSelector<UserActivitiesBloc, UserActivitiesState,
+            List<UnresolvedRequest>>(
+          selector: (state) => state.unresolvedRequest,
+          builder: (context, request) {
+            return GestureDetector(
+              onTap: () => context.pushNamed(RequestPage.route, extra: {
+                "userActivitiesBloc": context.read<UserActivitiesBloc>(),
+              }),
+              child: Visibility(
+                visible: request.isNotEmpty,
+                child: Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    title: Text(
+                      "Unresolved Request",
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "You have unresolved request listed, tap here to solve your request",
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    leading: const Icon(Icons.account_tree_rounded),
+                    visualDensity: VisualDensity.compact,
                   ),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<UserActivitiesBloc>()
-                              .add(UserExploreTapped(
-                                location: context
-                                    .read<AppBloc>()
-                                    .state
-                                    .currentLocation!,
-                              ));
-                        },
-                        child: const Text("Send")),
-                    TextButton(
-                        onPressed: () => context.pop(),
-                        child: const Text("Cancel")),
-                  ],
-                );
-              },
+                ),
+              ),
             );
           },
-          child: const Text("Explore"),
         ),
-      ),
+        const SizedBox(height: 12.0),
+        BlocListener<UserActivitiesBloc, UserActivitiesState>(
+          listener: (context, state) {
+            if (state.emergencyStatus == EmergencyStatus.loading) {
+              context.pop();
+              Fluttertoast.showToast(msg: "Sending an emergency");
+            }
+
+            if (state.emergencyStatus == EmergencyStatus.success) {
+              Fluttertoast.showToast(msg: state.emergencyResponse);
+              context.read<AppBloc>().add(const AppHomeTabTapped(tab: 1));
+            }
+          },
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog.adaptive(
+                      title: const Text("Sending an emergency"),
+                      content: const Text(
+                        "Please confirm you want to send an emergency.",
+                        textAlign: TextAlign.center,
+                      ),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              context
+                                  .read<UserActivitiesBloc>()
+                                  .add(UserActivitiesExploreTapped(
+                                    location: context
+                                        .read<AppBloc>()
+                                        .state
+                                        .currentLocation!,
+                                  ));
+                            },
+                            child: const Text("Send")),
+                        TextButton(
+                            onPressed: () => context.pop(),
+                            child: const Text("Cancel")),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text("Explore"),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
