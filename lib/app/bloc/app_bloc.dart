@@ -103,7 +103,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final member = await _authRepository.getMemberInfo(token);
 
     emit(state.copyWith(
-      currentUserInfo: event.currentUserInfo,
+      // currentUserInfo: event.currentUserInfo,
       appAuthStatus: AppAuthStatus.authenticated,
       member: member,
     ));

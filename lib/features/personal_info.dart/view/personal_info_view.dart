@@ -7,7 +7,6 @@ class PersonalInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController email = TextEditingController();
     final ThemeData theme = Theme.of(context);
 
     return Scaffold(

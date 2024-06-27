@@ -1,8 +1,5 @@
-import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/login/bloc/login_bloc.dart';
 import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
-import 'package:emergency_test/layout/home_page.dart';
-import 'package:emergency_test/repository/auth_repository.dart';
 import 'package:emergency_test/utils/asset.dart';
 import 'package:emergency_test/utils/fields.dart';
 import 'package:flutter/gestures.dart';
@@ -36,14 +33,14 @@ class _LoginViewState extends State<LoginView> {
             Fluttertoast.showToast(msg: state.error);
           }
 
-          if (state.loginStatus == LoginStatus.loginSuccess) {
-            context
-              ..read<AppBloc>().add(AppInitAuthRequested(
-                currentUserInfo: state.currentUserInfo,
-              ))
-              ..pushNamed(HomePage.route);
-            // context.pushNamed(HomePage.route);
-          }
+          // if (state.loginStatus == LoginStatus.loginSuccess) {
+          //   context
+          //     ..read<AppBloc>().add(AppInitAuthRequested(
+          //       currentUserInfo: state.currentUserInfo,
+          //     ))
+          //     ..pushNamed(HomePage.route);
+          //   // context.pushNamed(HomePage.route);
+          // }
         },
         child: LayoutBuilder(builder: (context, constraint) {
           return Form(

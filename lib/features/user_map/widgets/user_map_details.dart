@@ -24,8 +24,7 @@ class _UserMapDetailsState extends State<UserMapDetails> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        if (state.appLocationStatus == AppLocationStatus.loading ||
-            state.appLocationStatus == AppLocationStatus.idle) {
+        if (state.appLocationStatus == AppLocationStatus.loading) {
           return const Center(
             child: CircularProgressIndicator(),
           );

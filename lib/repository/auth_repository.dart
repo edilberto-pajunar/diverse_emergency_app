@@ -148,8 +148,6 @@ class AuthRepository {
       "id": memberId,
     };
 
-    print(memberId);
-
     final request = http.MultipartRequest("POST", uri)..fields.addAll(params);
 
     log("Calling: $uri");
@@ -193,8 +191,6 @@ class AuthRepository {
 
   Future<void> sendEmailVerif(String token) async {
     final uri = Uri.https(ApiClass.baseUrl, ApiClass.path);
-
-    print(token);
 
     final params = {
       "submit_member_submit_resend_verification_code": "",

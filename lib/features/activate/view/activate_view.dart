@@ -17,8 +17,6 @@ class ActivateView extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    print(context.read<AppBloc>().state.member);
-
     return Scaffold(
       body: BlocConsumer<ActivateBloc, ActivateState>(
         listener: (context, state) {

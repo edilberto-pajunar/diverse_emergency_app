@@ -101,7 +101,9 @@ class ContactActivity extends StatelessWidget {
                   subtitle: Row(
                     children: [
                       Icon(
-                        Icons.verified,
+                        !contactPerson.emailVerified!
+                            ? Icons.close
+                            : Icons.verified,
                         color: contactPerson.emailVerified!
                             ? Colors.green
                             : Colors.black,
@@ -113,10 +115,12 @@ class ContactActivity extends StatelessWidget {
                       ),
                       const SizedBox(width: 4.0),
                       Icon(
-                        Icons.phone,
+                        !contactPerson.mobileVerified!
+                            ? Icons.close
+                            : Icons.phone,
                         color: contactPerson.mobileVerified!
                             ? Colors.green
-                            : Colors.black,
+                            : Colors.red,
                         size: 12,
                       ),
                       Text(

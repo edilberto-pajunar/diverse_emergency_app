@@ -79,11 +79,11 @@ class AppRouter {
             name: AddContactPage.route,
             builder: (context, state) => const AddContactPage(),
           ),
-          GoRoute(
-            path: "invitation",
-            name: InvitationPage.route,
-            builder: (context, state) => const InvitationPage(),
-          ),
+          // GoRoute(
+          //   path: "invitation",
+          //   name: InvitationPage.route,
+          //   builder: (context, state) => const InvitationPage(),
+          // ),
         ],
       ),
       GoRoute(
@@ -161,7 +161,7 @@ class AppRouter {
           return "/check/add_contact";
         }
 
-        return null;
+        return "/";
       }
 
       final loggingIn = state.matchedLocation.startsWith("/login");
@@ -172,21 +172,6 @@ class AppRouter {
 
       return null;
     },
-    // redirect: (context, state) async {
-    //   final currentUser = _appBloc.state.appAuthStatus;
-
-    //   final isLoggedIn = currentUser == AppAuthStatus.authenticated;
-
-    //   final loggingIn = state.matchedLocation.startsWith("/login");
-
-    //   print(loggingIn);
-
-    //   if (!isLoggedIn) return loggingIn ? null : "/login";
-
-    //   if (loggingIn) return "/";
-
-    //   return null;
-    // },
     refreshListenable: _GoRouterRefreshStream(_appBloc.stream),
   );
 }

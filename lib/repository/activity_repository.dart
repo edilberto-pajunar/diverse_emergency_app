@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:emergency_test/models/member.dart';
 import 'package:emergency_test/utils/api.dart';
 import 'package:http/http.dart' as http;
 

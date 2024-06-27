@@ -89,7 +89,6 @@ class UserActivitiesBloc
         token,
         event.location,
       );
-      add(UserActivitiesUnresolvedExploreRequested());
       emit(state.copyWith(
         emergencyStatus: EmergencyStatus.success,
         emergencyResponse: response,

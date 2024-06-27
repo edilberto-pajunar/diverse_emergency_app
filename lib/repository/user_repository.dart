@@ -85,7 +85,6 @@ class UserRepository {
             .map((contact) => ContactPerson.fromJson(contact))
             .toList();
 
-        print(responseData["member_list_primary"]);
         return contacts;
       } else {
         throw Exception("No contact was found");

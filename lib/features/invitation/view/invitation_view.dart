@@ -26,6 +26,7 @@ class InvitationView extends StatelessWidget {
 
     final String? name = context.read<AppBloc>().state.member!.fullname;
 
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Invite"),

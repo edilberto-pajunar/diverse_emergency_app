@@ -12,11 +12,8 @@ class AppInitRequested extends AppEvent {}
 class AppInitLocationStreamRequested extends AppEvent {}
 
 class AppInitAuthRequested extends AppEvent {
-  final AppUser? currentUserInfo;
 
-  const AppInitAuthRequested({
-    this.currentUserInfo,
-  });
+  const AppInitAuthRequested();
 }
 
 class AppSignOutRequested extends AppEvent {}
