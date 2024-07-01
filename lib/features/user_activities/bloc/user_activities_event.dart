@@ -47,11 +47,19 @@ final class UserActivitiesFailedTriggered extends UserActivitiesEvent {
 }
 
 final class UserActivitiesCountdownTriggered extends UserActivitiesEvent {
-
   const UserActivitiesCountdownTriggered();
 }
 
 final class UserActivitiesStartCountdownTriggered extends UserActivitiesEvent {
-
   const UserActivitiesStartCountdownTriggered();
+}
+
+final class UserActivitiesSendEmergencyRequested extends UserActivitiesEvent {
+  final String message;
+  final Explore explore;
+
+  const UserActivitiesSendEmergencyRequested({
+    required this.message,
+    required this.explore,
+  });
 }

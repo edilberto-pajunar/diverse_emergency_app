@@ -64,6 +64,7 @@ class ExploreActivity extends StatelessWidget {
             if (state.emergencyStatus == EmergencyStatus.success) {
               Fluttertoast.showToast(msg: state.emergencyResponse!.message!);
               context.read<AppBloc>().add(const AppHomeTabTapped(tab: 1));
+              context.read<AppBloc>().add(AppInitRequested());
             }
             if (state.emergencyStatus == EmergencyStatus.failed) {
               Fluttertoast.showToast(msg: state.error ?? "");

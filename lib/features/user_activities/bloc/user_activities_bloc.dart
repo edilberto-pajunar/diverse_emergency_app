@@ -9,6 +9,7 @@ import 'package:emergency_test/repository/local_repository.dart';
 import 'package:emergency_test/repository/user_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 part 'user_activities_event.dart';
 part 'user_activities_state.dart';
@@ -31,6 +32,7 @@ class UserActivitiesBloc
     on<UserActivitiesResolveRequested>(_onResolveRequested);
     on<UserActivitiesCountdownTriggered>(_onCountdownTriggered);
     on<UserActivitiesStartCountdownTriggered>(_onCountStartdownTriggered);
+    on<UserActivitiesSendEmergencyRequested>(_onSendEmergencyRequested);
   }
 
   void _onInitRequested(
@@ -99,12 +101,18 @@ class UserActivitiesBloc
         event.location,
       );
 
+      add(UserActivitiesSendEmergencyRequested(
+        message: response.linkMessage!,
+        explore: response,
+      ));
+
       emit(state.copyWith(
         emergencyStatus: EmergencyStatus.success,
         emergencyResponse: response,
       ));
     } catch (e) {
-      emit(state.copyWith(emergencyStatus: EmergencyStatus.failed));
+      emit(state.copyWith(
+          emergencyStatus: EmergencyStatus.failed, error: e.toString()));
     }
   }
 
@@ -197,6 +205,18 @@ class UserActivitiesBloc
     UserActivitiesStartCountdownTriggered event,
     Emitter<UserActivitiesState> emit,
   ) async {}
+
+  void _onSendEmergencyRequested(
+    UserActivitiesSendEmergencyRequested event,
+    Emitter<UserActivitiesState> emit,
+  ) async {
+    await sendSMS(
+        message: event.message,
+        recipients: event.explore.listMemberMobileTagged!
+            .where((member) => member.mobile!.isNotEmpty)
+            .map((member) => member.mobile!)
+            .toList());
+  }
 
   @override
   Future<void> close() async {

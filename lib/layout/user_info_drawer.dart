@@ -4,6 +4,7 @@ import 'package:emergency_test/features/login/view/login_page.dart';
 import 'package:emergency_test/models/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:go_router/go_router.dart';
 
 class UserInfoDrawer extends StatelessWidget {
@@ -13,6 +14,16 @@ class UserInfoDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     const image =
         "https://i.pinimg.com/564x/1e/44/65/1e44653d5d836e2d61d89b63da8b467a.jpg";
+
+    final List<String> recipients = ["09684059727"];
+
+    Future<void> sendSms(String message, List<String> recipients) async {
+      String result = await sendSMS(message: message, recipients: recipients)
+          .catchError((onError) {
+        print(onError);
+      });
+      print(result);
+    }
 
     return BlocSelector<AppBloc, AppState, Member?>(
       selector: (state) => state.member,
@@ -38,6 +49,14 @@ class UserInfoDrawer extends StatelessWidget {
                           Text(currentUser.fullname!),
                         ],
                       ),
+                    ),
+                    ListTile(
+                      title: const Text("Send SMS"),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_sharp,
+                      ),
+                      leading: const Icon(Icons.history),
+                      onTap: () => sendSms("This is the test", recipients),
                     ),
                     ListTile(
                       title: const Text("History"),
