@@ -1,5 +1,7 @@
+import 'package:emergency_test/features/user_activities/bloc/user_activities_bloc.dart';
 import 'package:emergency_test/features/user_map/bloc/map_bloc.dart';
 import 'package:emergency_test/features/user_map/widgets/icon_title.dart';
+import 'package:emergency_test/models/explore.dart';
 import 'package:emergency_test/models/nearby_place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +43,34 @@ class UserMapPanel extends StatelessWidget {
                   ),
                 ),
               ),
+              BlocSelector<UserActivitiesBloc, UserActivitiesState, Explore?>(
+                selector: (state) => state.emergencyResponse,
+                builder: (context, emergencyResponse) {
+                  return Visibility(
+                    visible: emergencyResponse != null,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "ERN",
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(emergencyResponse?.ernCode ?? ""),
+                        Text(
+                          "Address",
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(emergencyResponse?.address ?? ""),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12.0),
               Center(
                 child: Text(
                   "Discover",

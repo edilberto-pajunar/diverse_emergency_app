@@ -12,7 +12,6 @@ class AppInitRequested extends AppEvent {}
 class AppInitLocationStreamRequested extends AppEvent {}
 
 class AppInitAuthRequested extends AppEvent {
-
   const AppInitAuthRequested();
 }
 
@@ -29,4 +28,8 @@ final class AppHomeTabTapped extends AppEvent {
   const AppHomeTabTapped({
     required this.tab,
   });
+}
+
+final class AppSessionTokenSubmitted extends AppEvent {
+  const AppSessionTokenSubmitted();
 }

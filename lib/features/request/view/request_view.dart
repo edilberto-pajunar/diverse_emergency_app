@@ -17,6 +17,7 @@ class RequestView extends StatelessWidget {
         title: const Text("Unresolved Requests"),
       ),
       body: BlocListener<UserActivitiesBloc, UserActivitiesState>(
+        listenWhen: (prev, curr) => prev.resolveStatus != curr.resolveStatus,
         listener: (context, state) {
           if (state.resolveStatus == ResolveStatus.loading) {}
 

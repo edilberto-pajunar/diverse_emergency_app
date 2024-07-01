@@ -45,7 +45,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitLocationStreamRequested event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(appLocationStatus: AppLocationStatus.loading));
+    // emit(state.copyWith(appLocationStatus: AppLocationStatus.loading));
     try {
       final serviceStatus = await Geolocator.isLocationServiceEnabled();
       if (!serviceStatus) {
@@ -96,7 +96,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     final token = LocalRepository.getString("token");
 
-    if (token == null) return;
+    if (token == null) {
+      emit(state.copyWith(appAuthStatus: AppAuthStatus.unauthenticated));
+      return;
+    }
 
     emit(state.copyWith(appAuthStatus: AppAuthStatus.loading));
 
@@ -122,6 +125,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(state.copyWith(
         signoutStatus: SignoutStatus.signOutSuccess,
         appAuthStatus: AppAuthStatus.unauthenticated,
+        member: null,
       ));
     } catch (e) {
       add(AppSignOutFailed(e as Exception));

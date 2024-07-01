@@ -8,43 +8,54 @@ enum ContactStatus { idle, loading, success, failed }
 
 enum ResolveStatus { idle, loading, success, failed }
 
+enum TimerStatus { idle, inProgress, finished }
+
 final class UserActivitiesState extends Equatable {
   final ContactType contactType;
   final List<ContactPerson> contactPersons;
   final EmergencyStatus emergencyStatus;
-  final String emergencyResponse;
+  final Explore? emergencyResponse;
   final ContactStatus contactStatus;
   final List<UnresolvedRequest> unresolvedRequest;
   final String? error;
   final ResolveStatus resolveStatus;
   final String? resolveResponse;
+  final int? timer;
+  final TimerStatus timerStatus;
+  final String? ernCode;
 
   const UserActivitiesState({
     this.contactType = ContactType.primary,
     this.contactPersons = const [],
     this.emergencyStatus = EmergencyStatus.idle,
-    this.emergencyResponse = "",
+    this.emergencyResponse,
     this.contactStatus = ContactStatus.idle,
     this.unresolvedRequest = const [],
     this.error,
     this.resolveStatus = ResolveStatus.idle,
     this.resolveResponse = "",
+    this.timer = 10,
+    this.timerStatus = TimerStatus.idle,
+    this.ernCode,
   });
 
   UserActivitiesState copyWith({
     ContactType? contactType,
     List<ContactPerson>? contactPersons,
     EmergencyStatus? emergencyStatus,
-    String? emergencyResponse,
+    Explore? emergencyResponse,
     ContactStatus? contactStatus,
     List<UnresolvedRequest>? unresolvedRequest,
     String? error,
     ResolveStatus? resolveStatus,
     String? resolveResponse,
+    int? timer,
+    TimerStatus? timerStatus,
+    String? ernCode,
   }) {
     return UserActivitiesState(
       contactType: contactType ?? this.contactType,
-      contactPersons: contactPersons ?? this.contactPersons,
+      contactPersons: contactPersons ?? [],
       emergencyStatus: emergencyStatus ?? this.emergencyStatus,
       emergencyResponse: emergencyResponse ?? this.emergencyResponse,
       contactStatus: contactStatus ?? this.contactStatus,
@@ -52,6 +63,9 @@ final class UserActivitiesState extends Equatable {
       error: error ?? this.error,
       resolveStatus: resolveStatus ?? this.resolveStatus,
       resolveResponse: resolveResponse ?? this.resolveResponse,
+      timer: timer ?? this.timer,
+      timerStatus: timerStatus ?? this.timerStatus,
+      ernCode: ernCode ?? this.ernCode,
     );
   }
 
@@ -65,5 +79,8 @@ final class UserActivitiesState extends Equatable {
         unresolvedRequest,
         resolveStatus,
         resolveResponse,
+        timer,
+        timerStatus,
+        ernCode,
       ];
 }

@@ -3,12 +3,13 @@ import 'dart:developer';
 
 import 'package:emergency_test/models/app_location.dart';
 import 'package:emergency_test/models/contact_person.dart';
+import 'package:emergency_test/models/explore.dart';
 import 'package:emergency_test/models/unresolved_request.dart';
 import 'package:emergency_test/utils/api.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository {
-  Future<String> sendEmergency(
+  Future<Explore> sendEmergency(
     String token,
     AppLocation location,
   ) async {
@@ -36,8 +37,10 @@ class UserRepository {
         throw "Something went wrong. ${responseData["message"]}";
       }
 
+
       if (responseData["result"] == 1) {
-        return responseData["message"];
+        final explore = Explore.fromJson(responseData);
+        return explore;
       } else {
         throw Exception("No history was found");
       }

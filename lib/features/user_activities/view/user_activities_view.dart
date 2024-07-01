@@ -1,6 +1,7 @@
 import 'package:emergency_test/app/bloc/app_bloc.dart';
 import 'package:emergency_test/features/invitation/view/invitation_page.dart';
 import 'package:emergency_test/features/members/view/members_page.dart';
+import 'package:emergency_test/features/tag_by/view/tag_by_page.dart';
 import 'package:emergency_test/features/user_activities/bloc/user_activities_bloc.dart';
 import 'package:emergency_test/features/user_activities/widget/explore_activity.dart';
 import 'package:emergency_test/features/user_activities/widget/contact_activity.dart';
@@ -31,9 +32,9 @@ class UserActivitiesView extends StatelessWidget {
             inAsyncCall: showHUD,
             child: RefreshIndicator(
               onRefresh: () async {
-                context
-                    .read<UserActivitiesBloc>()
-                    .add(UserActivitiesInitRequested());
+                // context
+                //     .read<UserActivitiesBloc>()
+                //     .add(UserActivitiesInitRequested());
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -178,7 +179,7 @@ class UserActivitiesView extends StatelessWidget {
                           ActionTag(
                             text: "Who tagged me?",
                             icon: Icons.people,
-                            onPressed: () {},
+                            onPressed: () => context.pushNamed(TagByPage.route),
                           ),
                         ],
                       ),

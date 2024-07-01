@@ -55,8 +55,9 @@ class AddContactView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        print(
-                            "memberid: ${context.read<AppBloc>().state.member?.fullname}");
+                        context
+                            .read<AppBloc>()
+                            .add(const AppInitAuthRequested());
                       },
                       child: const Text("RELOAD MANUALLY"),
                     ),

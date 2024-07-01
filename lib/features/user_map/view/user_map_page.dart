@@ -20,11 +20,6 @@ class UserMapPage extends StatelessWidget {
             placeRepository: context.read<PlaceRepository>(),
           ),
         ),
-        BlocProvider(
-          create: (context) => UserActivitiesBloc(
-            userRepository: context.read<UserRepository>(),
-          ),
-        ),
       ],
       child: const UserMapView(),
     );

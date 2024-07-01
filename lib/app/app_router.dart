@@ -13,6 +13,7 @@ import 'package:emergency_test/features/sign_up/sign_up_home_address/view/sign_u
 import 'package:emergency_test/features/sign_up/sign_up_review/view/sign_up_review_page.dart';
 import 'package:emergency_test/features/sign_up/sign_up_security/view/sign_up_security_page.dart';
 import 'package:emergency_test/features/sign_up/view/sign_up_page.dart';
+import 'package:emergency_test/features/tag_by/view/tag_by_page.dart';
 import 'package:emergency_test/features/user_activities/view/user_activities_page.dart';
 import 'package:emergency_test/features/user_map/view/user_map_page.dart';
 import 'package:emergency_test/features/user_profile/view/user_profile_page.dart';
@@ -109,13 +110,19 @@ class AppRouter {
                       (state.extra as Map)["userActivitiesBloc"],
                 ),
               ),
+              GoRoute(
+                path: "invitation",
+                name: InvitationPage.route,
+                builder: (context, state) => const InvitationPage(),
+              ),
+              GoRoute(
+                path: "tag",
+                name: TagByPage.route,
+                builder: (context, state) => const TagByPage(),
+              ),
             ],
           ),
-          GoRoute(
-            path: "invitation",
-            name: "invitation_root_page_route",
-            builder: (context, state) => const InvitationPage(),
-          ),
+
           GoRoute(
             path: "map",
             name: UserMapPage.route,
@@ -135,7 +142,6 @@ class AppRouter {
           ),
 
           // Drawer
-
           GoRoute(
             path: "history",
             name: HistoryPage.route,
@@ -144,35 +150,23 @@ class AppRouter {
         ],
       ),
     ],
-    redirect: (context, state) async {
-      final currentUser = LocalRepository.getString("token");
-      print(state.matchedLocation);
-      final isLoggedIn = currentUser != null;
+    // redirect: (context, state) async {
+    //   final currentUser = LocalRepository.getString("token");
+    //   final isLoggedIn = currentUser != null;
 
-      if (_appBloc.state.member != null) {
-        final isVerified = _appBloc.state.member?.verified;
-        final hasContact = double.parse(_appBloc.state.member!.totalTag!) > 0;
+    //   print("Current User: $isLoggedIn");
 
-        if (!isVerified!) {
-          return "/check/activate";
-        }
+    //   final loggingIn = state.matchedLocation.startsWith("/login");
 
-        if (!hasContact) {
-          return "/check/add_contact";
-        }
+    //   if (!isLoggedIn) return loggingIn ? null : "/login";
 
-        return "/";
-      }
+    //   if (loggingIn) {
+    //     return "/";
+    //   }
 
-      final loggingIn = state.matchedLocation.startsWith("/login");
-
-      if (!isLoggedIn) return loggingIn ? null : "/login";
-
-      if (loggingIn) return "/";
-
-      return null;
-    },
-    refreshListenable: _GoRouterRefreshStream(_appBloc.stream),
+    //   return null;
+    // },
+    // refreshListenable: _GoRouterRefreshStream(_appBloc.stream),
   );
 }
 

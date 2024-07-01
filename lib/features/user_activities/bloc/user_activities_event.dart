@@ -45,3 +45,13 @@ final class UserActivitiesFailedTriggered extends UserActivitiesEvent {
     required this.error,
   });
 }
+
+final class UserActivitiesCountdownTriggered extends UserActivitiesEvent {
+
+  const UserActivitiesCountdownTriggered();
+}
+
+final class UserActivitiesStartCountdownTriggered extends UserActivitiesEvent {
+
+  const UserActivitiesStartCountdownTriggered();
+}

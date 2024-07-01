@@ -15,6 +15,7 @@ class ContactActivity extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
 
     return BlocBuilder<UserActivitiesBloc, UserActivitiesState>(
+      buildWhen: (prev, curr) => prev.contactStatus != curr.contactStatus,
       builder: (context, state) {
         if (state.contactStatus == ContactStatus.loading) {
           return const Center(
@@ -75,6 +76,7 @@ class ContactActivity extends StatelessWidget {
               ],
             ),
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: state.contactPersons.length,
               itemBuilder: (context, index) {
